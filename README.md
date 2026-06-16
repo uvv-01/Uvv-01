@@ -1,6 +1,6 @@
 <!-- HEADER START -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/type=waving&color=7C4DFF&height=150&section=header&text=Yuvraj%20Singh&fontSize=40&animation=fadeIn&fontAlignY=45" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=7C4DFF&height=150&section=header&text=Yuvraj%20Singh&fontSize=40&animation=fadeIn&fontAlignY=45" width="100%" />
 </p>
 
 <p align="center">
@@ -128,6 +128,6 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
 
 <!-- FOOTER START -->
 <p align="center">
-  <img width="100%" src="https://capsule-render.vercel.app/type=waving&color=7C4DFF&height=100&section=footer"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=7C4DFF&height=100&section=footer" width="100%" />
 </p>
 <!-- FOOTER END -->
