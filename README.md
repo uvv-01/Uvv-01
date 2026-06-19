@@ -120,10 +120,9 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
 
 <div align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true" width="100%" />
-  <br>
-  <img src="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake-dark.svg" width="100%" alt="Contribution Snake" />
+  <br><br>
+  <img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake.svg" width="100%" />
 </div>
-
 ---
 
 <!-- FOOTER START -->
