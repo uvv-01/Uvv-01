@@ -118,19 +118,22 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
 ### 👑 3D Contribution Map
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/profile-3d-contrib/profile-night-green.svg" width="100%" />
+  <img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/profile-season-animate.svg" width="100%" alt="3D Contribution Map" />
 </div>
 
-
 ---
-
 ### 🐍 Contribution Activity Vector
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true" width="100%" />
+
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true" width="100%" alt="Contribution Graph" />
+
   <br><br>
-  <img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake.svg" width="100%" />
+
+  <img src="https://github.com/uvv-01/uvv-01/blob/output/github-contribution-grid-snake.svg?raw=true" width="100%" alt="Contribution Snake" />
+
 </div>
+
 ---
 
 <!-- FOOTER START -->
