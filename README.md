@@ -124,17 +124,7 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
 ---
 ### 🐍 Contribution Activity Vector
 
-<div align="center">
 
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true" width="100%" alt="Contribution Graph" />
-
-  <br><br>
-
-  <img src="https://github.com/uvv-01/uvv-01/blob/output/github-contribution-grid-snake.svg?raw=true" width="100%" alt="Contribution Snake" />
-
-</div>
-
----
 
 <!-- FOOTER START -->
 <p align="center">
