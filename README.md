@@ -94,7 +94,7 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
 *   **[Face Detection & Continuous Tracking System](https://github.com/uvv-01)**  
     Real-time computer vision engine designed using OpenCV and Intel OpenVINO. Implemented localized face detection, continuous identity assignment, and hardware-aware inference tracking.
 *   **[Personal Portfolio Architecture](https://github.com/uvv-01)**  
-    A clean, modern, and high-performance portfolio site built with semantic HTML5, CSS3, and JavaScript, engineered for multi-device cross-viewport consistency.
+    A clean, modern, and high-performance portfolio site built with semantic HTML5, CSS, and JavaScript, engineered for multi-device cross-viewport consistency.
 
 ---
 
