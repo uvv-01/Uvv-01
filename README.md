@@ -121,9 +121,6 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
   <img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/profile-season-animate.svg" width="100%" alt="3D Contribution Map" />
 </div>
 
----
-### 🐍 Contribution Activity Vector
-
 
 
 <!-- FOOTER START -->
