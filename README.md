@@ -40,38 +40,88 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
 
 ---
 
-### 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 <div align="center">
 
-| Category | Technologies |
-| :--- | :--- |
-| **Languages** | `Python` `Java` `JavaScript` `C` `HTML5` `CSS3` |
-| **Frameworks & Runtimes** | `React` `Node.js` |
-| **DevOps & Tooling** | `Git` `GitHub Actions` `VS Code` |
-| **AI & Computer Vision** | `OpenCV` `Intel OpenVINO` |
-| **Competencies** | `Data Structures & Algorithms (DSA)` `OOP` `CI/CD Workflows` `REST APIs` |
+### Languages
+
+<img src="https://skillicons.dev/icons?i=python,java,c,js,html,css&theme=dark"/>
+
+### Frontend
+
+<img src="https://skillicons.dev/icons?i=react,nextjs,tailwind&theme=dark"/>
+
+### Backend & Database
+
+<img src="https://skillicons.dev/icons?i=nodejs,fastapi,sqlite,mysql,firebase&theme=dark"/>
+
+### AI & Computer Vision
+
+<img src="https://skillicons.dev/icons?i=opencv&theme=dark"/>
+
+<p>
+<img src="https://img.shields.io/badge/Intel_OpenVINO-0071C5?style=for-the-badge&logo=intel&logoColor=white"/>
+</p>
+
+### DevOps & Tools
+
+<img src="https://skillicons.dev/icons?i=git,github,githubactions,vscode,linux,docker&theme=dark"/>
+
+### Currently Learning
+
+<img src="https://skillicons.dev/icons?i=typescript,cpp,aws&theme=dark"/>
 
 </div>
 
 ---
 
-### 📈 GitHub Ecosystem Metrics
+
+## 📈 GitHub Analytics
 
 <div align="center">
-  <table border="0">
-    <tr>
-      <td>
-        <img height="180em" src="https://github-readme-stats.vercel.app/api?username=uvv-01&show_icons=true&theme=tokyonight&hide_border=true&count_private=true"/>
-      </td>
-      <td>
-        <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=uvv-01&layout=compact&theme=tokyonight&hide_border=true"/>
-      </td>
-    </tr>
-  </table>
-  
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=uvv-01&theme=tokyonight&hide_border=true" width="100%" alt="GitHub Streak" />
+
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=uvv-01&show_icons=true&count_private=true&include_all_commits=true&theme=tokyonight&hide_border=true"/>
+
+<img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=uvv-01&theme=tokyonight&hide_border=true"/>
+
+<br>
+
+<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=uvv-01&layout=compact&theme=tokyonight&hide_border=true"/>
+
 </div>
+
+## 📊 Contribution Graph
+
+<div align="center">
+
+<img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true&area=true"/>
+
+</div>
+
+---
+
+## 📋 GitHub Profile Summary
+
+<div align="center">
+
+<img width="100%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=uvv-01&theme=tokyonight"/>
+
+<br><br>
+
+<img width="32%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=uvv-01&theme=tokyonight"/>
+
+<img width="32%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=uvv-01&theme=tokyonight"/>
+
+<img width="32%" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=uvv-01&theme=tokyonight"/>
+
+<br><br>
+
+<img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=uvv-01&theme=tokyonight&utcOffset=5.5"/>
+
+</div>
+
+---
 
 ---
 
@@ -114,6 +164,8 @@ I am a first-year **B.Tech student in Electronics & Communication Engineering** 
 
 </div>
 ---
+
+
 
 ### 👑 3D Contribution Map
 
