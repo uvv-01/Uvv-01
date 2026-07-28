@@ -112,44 +112,45 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 
 ---
 
-## 🚀 Featured Projects
-
-<div align="center">
-
-| 🚀 Project | Description |
-|------------|-------------|
-| **Face Detection & Tracking** | Real-time Computer Vision with OpenCV & OpenVINO |
-| **Systema** | AI-powered productivity platform |
-| **Developer Portfolio** | Responsive portfolio built with modern web technologies |
-
-</div>
-
----
-
-<p align="center">
-
-<img src="https://capsule-render.vercel.app/api?type=rect&height=2&color=gradient"/>
-
-</p>
 <!-- ===================================================== -->
-<!--                 PROJECTS & ACTIVITY                   -->
+<!--                 FEATURED PROJECTS                      -->
 <!-- ===================================================== -->
 
 # 🚀 Featured Projects
 
 <p align="center">
+Building open-source software, AI applications, and developer tools that solve real-world problems.
+</p>
 
-<a href="https://github.com/uvv-01/Systema">
-<img width="48%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=Systema&theme=tokyonight&hide_border=true"/>
+<p align="center">
+
+<a href="https://github.com/uvv-01/openvino_oss_navigator">
+<img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=openvino_oss_navigator&theme=tokyonight&hide_border=true"/>
 </a>
 
-<a href="https://github.com/uvv-01/YOUR-BEST-REPO">
-<img width="48%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=YOUR-BEST-REPO&theme=tokyonight&hide_border=true"/>
+<a href="https://github.com/uvv-01/openvino-face-detection-auto-switch">
+<img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=openvino-face-detection-auto-switch&theme=tokyonight&hide_border=true"/>
 </a>
 
 </p>
 
-> ⭐ Replace `YOUR-BEST-REPO` with your second best project.
+<p align="center">
+
+<a href="https://github.com/uvv-01/advance_portfolio">
+<img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=advance_portfolio&theme=tokyonight&hide_border=true"/>
+</a>
+
+</p>
+
+<p align="center">
+
+<b>🌍 OpenVINO OSS Navigator</b> • Open Source Discovery Platform &nbsp; • &nbsp;
+<b>👁️ Face Detection</b> • OpenCV + OpenVINO &nbsp; • &nbsp;
+<b>🌐 Portfolio</b> • Modern Responsive Website
+
+</p>
+
+---
 
 ---
 
@@ -189,11 +190,8 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 # 🌆 3D Contribution Skyline
 
 <p align="center">
-
-<img width="100%" src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/profile-night-green.svg"/>
-
+  <img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/profile-season-animate.svg" width="100%" alt="3D Contribution"/>
 </p>
-
 > ⚠️ This also requires the 3D contribution GitHub Action.
 
 ---
@@ -255,57 +253,9 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 <!--                 CONNECT & FOOTER                      -->
 <!-- ===================================================== -->
 
-# 📌 Featured Repositories
-
-<p align="center">
-
-<a href="https://github.com/uvv-01/Systema">
-
-<img width="48%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=Systema&theme=tokyonight&hide_border=true"/>
-
-</a>
-
-<a href="https://github.com/uvv-01/YOUR_SECOND_PROJECT">
-
-<img width="48%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=YOUR_SECOND_PROJECT&theme=tokyonight&hide_border=true"/>
-
-</a>
-
-</p>
 
 ---
 
-# 🌐 Let's Connect
-
-<p align="center">
-
-<a href="mailto:yuvrajsinghdnb2006@gmail.com">
-
-<img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white"/>
-
-</a>
-
-<a href="https://github.com/uvv-01">
-
-<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
-
-</a>
-
-<a href="https://www.linkedin.com/in/yuvraj-singh-b70670356">
-
-<img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
-
-</a>
-
-<a href="https://leetcode.com/u/TUS8Mufpy3/">
-
-<img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=white"/>
-
-</a>
-
-</p>
-
----
 
 <div align="center">
 
