@@ -3,9 +3,7 @@
 <!-- ===================================================== -->
 
 <p align="center">
-
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=240&color=gradient&text=Yuvraj%20Singh&fontSize=55&fontAlignY=38&animation=fadeIn"/>
-
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=240&color=0:6C63FF,50:8B5CF6,100:A855F7&text=Yuvraj%20Singh&fontSize=52&fontColor=ffffff&animation=fadeIn&fontAlignY=38"/>
 </p>
 
 <p align="center">
@@ -90,7 +88,7 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 
 <p align="center">
 
-<img src="https://skillicons.dev/icons?i=python,java,cpp"/>
+<img src="https://skillicons.dev/icons?i=python,java,cpp,javascript,tailwind"/>
 
 <br>
 
@@ -98,11 +96,11 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 
 <br>
 
-<img src="https://skillicons.dev/icons?i=mysql,postgres,mongodb,firebase"/>
+<img src="https://skillicons.dev/icons?i=mysql,postgres"/>
 
 <br>
 
-<img src="https://skillicons.dev/icons?i=docker,linux,git,githubactions"/>
+<img src="https://skillicons.dev/icons?i=docker,git,githubactions"/>
 
 <br>
 
@@ -116,74 +114,50 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 <!--                 FEATURED PROJECTS                      -->
 <!-- ===================================================== -->
 
+<!-- ===================================================== -->
+<!--                 FEATURED PROJECTS                      -->
+<!-- ===================================================== -->
+
 # 🚀 Featured Projects
 
-<p align="center">
-Building open-source software, AI applications, and developer tools that solve real-world problems.
-</p>
+| Project | Description | Stack |
+|---------|-------------|-------|
+| 🌍 **OSS Navigator** | Discover and contribute to OpenVINO open-source projects. | Next.js • TypeScript |
+| 👁️ **Face Detection** | Real-time face detection using OpenCV & OpenVINO. | Python • OpenCV |
+| 🌐 **Portfolio** | Modern responsive developer portfolio website. | HTML • CSS • JavaScript |
 
-<p align="center">
-
-<a href="https://github.com/uvv-01/openvino_oss_navigator">
-<img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=openvino_oss_navigator&theme=tokyonight&hide_border=true"/>
-</a>
-
-<a href="https://github.com/uvv-01/openvino-face-detection-auto-switch">
-<img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=openvino-face-detection-auto-switch&theme=tokyonight&hide_border=true"/>
-</a>
-
-</p>
-
-<p align="center">
-
-<a href="https://github.com/uvv-01/advance_portfolio">
-<img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=uvv-01&repo=advance_portfolio&theme=tokyonight&hide_border=true"/>
-</a>
-
-</p>
-
-<p align="center">
-
-<b>🌍 OpenVINO OSS Navigator</b> • Open Source Discovery Platform &nbsp; • &nbsp;
-<b>👁️ Face Detection</b> • OpenCV + OpenVINO &nbsp; • &nbsp;
-<b>🌐 Portfolio</b> • Modern Responsive Website
-
-</p>
-
----
-
----
 
 # 📊 GitHub Analytics
 
 <p align="center">
-
-<img width="49%" src="https://github-readme-stats.vercel.app/api?username=uvv-01&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=github"/>
-
-<img width="49%" src="https://streak-stats.demolab.com?user=uvv-01&theme=tokyonight&hide_border=true"/>
-
+<img src="https://streak-stats.demolab.com?user=uvv-01&theme=tokyonight&hide_border=true"/>
 </p>
-
----
-
-# 📈 Contribution Graph
 
 <p align="center">
-
-<img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true&area=true"/>
-
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true"/>
 </p>
 
 ---
+
 
 # 🐍 Contribution Snake
 
 <p align="center">
 
-<img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake-dark.svg" alt="GitHub Contribution Snake" />
-</p>
+<picture>
 
-> ⚠️ This works **only after** you set up the Snake GitHub Action.
+<source media="(prefers-color-scheme: dark)"
+srcset="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake-dark.svg">
+
+<source media="(prefers-color-scheme: light)"
+srcset="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake.svg">
+
+<img alt="GitHub Contribution Snake"
+src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake.svg">
+
+</picture>
+
+</p>
 
 ---
 
@@ -207,7 +181,7 @@ Building open-source software, AI applications, and developer tools that solve r
 
 🌍 Contributing: Intel OpenVINO
 
-⚡ Currently   : Building Systema
+⚡ Currently   : Building oss navigator
 
 📍 Status      : Online
 
