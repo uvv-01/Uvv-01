@@ -88,11 +88,11 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 
 <p align="center">
 
-<img src="https://skillicons.dev/icons?i=python,java,cpp,javascript,tailwind"/>
+<img src="https://skillicons.dev/icons?i=html,css,javascript,java,python.cpp"/>
 
 <br>
 
-<img src="https://skillicons.dev/icons?i=react,nextjs,nodejs,fastapi"/>
+<img src="https://skillicons.dev/icons?i=react,nextjs,nodejs"/>
 
 <br>
 
@@ -104,7 +104,7 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 
 <br>
 
-<img src="https://skillicons.dev/icons?i=aws,vscode"/>
+<img src="https://skillicons.dev/icons?i=vscode"/>
 
 </p>
 
