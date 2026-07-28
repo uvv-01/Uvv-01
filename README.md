@@ -179,8 +179,7 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 
 <p align="center">
 
-<img width="100%" src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake-dark.svg"/>
-
+<img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake-dark.svg" alt="GitHub Contribution Snake" />
 </p>
 
 > ⚠️ This works **only after** you set up the Snake GitHub Action.
