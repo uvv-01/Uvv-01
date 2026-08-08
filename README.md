@@ -161,14 +161,6 @@ src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-
 
 ---
 
-# 🌆 3D Contribution Skyline
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/profile-season-animate.svg" width="100%" alt="3D Contribution"/>
-</p>
-> ⚠️ This also requires the 3D contribution GitHub Action.
-
----
 
 # 💻 Developer Dashboard
 
