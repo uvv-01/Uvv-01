@@ -200,7 +200,7 @@ src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-
 
 </a>
 
-<a href="https://www.codechef.com/users/YOUR_USERNAME">
+<a href="https://www.codechef.com/users/uvv_0000">
 
 <img src="https://img.shields.io/badge/CodeChef-5B4638?style=for-the-badge&logo=codechef&logoColor=white"/>
 
