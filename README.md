@@ -130,10 +130,6 @@ Currently contributing to **Intel OpenVINO**, exploring backend systems, automat
 # 📊 GitHub Analytics
 
 <p align="center">
-<img src="https://streak-stats.demolab.com?user=uvv-01&theme=tokyonight&hide_border=true"/>
-</p>
-
-<p align="center">
 <img src="https://github-readme-activity-graph.vercel.app/graph?username=uvv-01&theme=tokyo-night&hide_border=true"/>
 </p>
 
