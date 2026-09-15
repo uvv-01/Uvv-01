@@ -24,68 +24,30 @@
 
 ---
 
-### Competitive Programming
-
-| Platform | Rating | Max Rating | Solved | Contests |
-|----------|--------|------------|--------|----------|
-| [LeetCode](https://leetcode.com/u/TUS8Mufpy3/) | — | — | **151** | — |
-| [CodeChef](https://www.codechef.com/users/uvv_0000) | **1202** ★1 | **1202** | **70** | **9** |
-
-<details>
-<summary><b>LeetCode breakdown</b></summary>
-
-```
-Easy    ████████████████████░░░░░░░░░░  90 / 965
-Medium  ███░░░░░░░░░░░░░░░░░░░░░░░░░░░  59 / 2115
-Hard    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   2 / 975
-                                   Total: 151 solved
-                                   Ranking: #1,158,658
-```
-
-</details>
-
-<details>
-<summary><b>CodeChef badges</b></summary>
-
-```
-🥉 Contest Contender  — participated in 5+ contests
-🥉 Problem Solver     — solved 50+ problems
-```
-
-</details>
-
----
-
-### GitHub
-
-```
- Repositories  │  22
- Followers     │  22
- Following     │  30
- Contributions │  214 (last year)
-```
-
-**Notable repos:**
-
-| Repo | What |
-|------|------|
-| [`quantoo`](https://github.com/uvv-01/quantoo) | Quantum Daily — practice quantum computing like an engineer |
-| [`openvino_oss_navigator`](https://github.com/uvv-01/openvino_oss_navigator) | Discover and contribute to OpenVINO open-source projects |
-| [`FoveaEdge`](https://github.com/uvv-01/FoveaEdge) | Selective inference research for OpenVINO edge devices |
-| [`arya_college_training`](https://github.com/uvv-01/arya_college_training) | C++ foundations and competitive programming training |
-| [`pengu`](https://github.com/uvv-01/pengu) | Local-first, voice-controlled desktop assistant |
-
----
-
-### Contribution Snake
-
 <p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake.svg">
-  <img alt="GitHub Contribution Snake" src="https://raw.githubusercontent.com/uvv-01/uvv-01/output/github-contribution-grid-snake.svg">
-</picture>
+  <img src="assets/cp-profile.svg" alt="CP Profile Dashboard" width="100%"/>
 </p>
+
+---
+
+### Tech Stack
+
+```
+LANGUAGES      Java · C++ · Python · JavaScript · TypeScript
+FRAMEWORKS     React · Next.js · Node.js
+DATABASES      MySQL · PostgreSQL
+DEVOPS         Docker · Git · GitHub Actions
+TOOLS          VS Code · Linux
+```
+
+### Selected Projects
+
+| Project | Description | Stack |
+|---------|-------------|-------|
+| [quantoo](https://github.com/uvv-01/quantoo) | Quantum Daily — practice quantum computing | TypeScript |
+| [openvino_oss_navigator](https://github.com/uvv-01/openvino_oss_navigator) | Discover OpenVINO open-source projects | TypeScript |
+| [FoveaEdge](https://github.com/uvv-01/FoveaEdge) | Selective inference for OpenVINO edge devices | Python |
+| [pengu](https://github.com/uvv-01/pengu) | Voice-controlled desktop assistant | Python |
 
 ---
 
