@@ -4,6 +4,10 @@ Galaga Contribution Graph Generator
 Builds authentic Galaga arcade animated SVGs for GitHub profile README
 based on the reference implementation from abozanona/pacman-contribution-graph.
 Connects directly to uvv-01's authentic GitHub contribution graph.
+
+Uses 100% pure SVG vector geometry for the rocket ship, thruster fire,
+twin plasma cannons, and laser projectiles to guarantee full visibility
+and bypass GitHub Camo proxy raster sanitization.
 """
 
 import json
@@ -21,22 +25,15 @@ GRID_WIDTH = 53
 GRID_HEIGHT = 7
 DELTA_TIME = 200
 
-SHIP_Y = 10.5
-SHIP_SPEED = 0.4
-SHIP_HALF_WIDTH = 0.8
+# Spaceship positioned in the lower flight corridor
+SHIP_Y = 9.5
+SHIP_SPEED = 0.45
+SHIP_HALF_WIDTH = 1.0
 
-BULLET_SPEED = 0.6
+BULLET_SPEED = 0.65
 MAX_BULLETS = 10
 FIRE_RATE = 2
 EXPLOSION_FRAMES = 7
-
-BULLET_IMAGE_DATA = (
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAACACAMAAACMX59YAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAByUExURQAAAP////7+/gBE/wBE/wBE/wBE/wBE/wBE/gBE/gBE/wBE/wBE/gBE/wBE/wBE/gBE/gBE/+cgMfUeJf8AAP8AAP4AAP4AAABE/wBE/hhW/y9m/y9n/yNd/4Sl/73O/7zO//8cHP4cHP8AAP4AAP///6QdcYAAAAAYdFJOUwAAAGbHk4W9hb1genq/3RYcHJPFhb2FvbKPFBsAAAABYktHRAH/Ai3eAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH6gUIFjcZmpji7QAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0wNS0wOFQyMjo1NToyNSswMDowMDWlEL0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMDUtMDhUMjI6NTU6MjUrMDA6MDBE+KgBAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTA1LTA4VDIyOjU1OjI1KzAwOjAwE+2J3gAAAk5JREFUaN7tVotWwyAMnahzvp2PSXxMZ/P/3+ggECija1N2ZDvuWmm17W1y82IyyeH0LIPzyXBMdQYXR4IjwZFATDAD0NoeYE/mT30pITBfNK/ZNx2TyAX3acvjL4QE2r/HFxIXptGHmUEkIkkXx0CmwczIl6KD4OqaccPnWx8BXtc/d9GDN/Twepmc6S5A7x1z3iCgDKJfoFxI7kEI7nrdYkGfWXQZE3DW5e2HrGM5C0Anj3aoATmCyH8XAr5B/05oxRpsYGcEvQ5vJwiFxzUAkDAlBUrpndWAshg09NsCO9TgPxEIamE8wZ5rMIzg7b2FD7t+CgiWJxl8lRJ8DyFwJbdUJ0rFLysm6AsjFFowVgMYQlBswX4TtLcSYAiUD59qhzEJGGwSmF5r80CFFAgW+JZND3ZO5zINYDgBbBFRjbdAV63GLQSqjwAghJMJXB4os7bL2e9C9iWVewlUN8H9g8OcYC8fVxY/qxhPc3rOH4T8Bvq5CUC/vgh26zEBYxQBugOrWVCNYOEVwKAE1nAB2YYxBBh/HQ8uCvUJFi7+VARIVwfmAqcBhmQWWoB1XdhFGNGFcb0cZBjjrszRLLWgkgbovJB2JJfKXIljUjlSEev0RJuArIF0vC84/AYNLX/sQtRIxoRxj4qpXkfiaeIm/J+HcbEDDSiRMRoQNV3AA8yDcgJM/G+EPdE3VUpFd5INV9+JXFMykLmAfjIjmyK0wLUj5NYkJKBx0sKrWIMEchGxsgVNsQVNCYEfLGEySrd5xSK6LArjdUwtDIrCL/JGvSI+ReIgAAAAAElFTkSuQmCC"
-)
-
-SHIP_IMAGE_DATA = (
-    "data:image/png;base64,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"
-)
 
 THEMES = {
     "github-dark": {
@@ -123,7 +120,7 @@ def run_galaga_sim(initial_grid):
     
     def find_target_col(exclude=-1):
         ship_col = int(round(ship["x"] - 0.5))
-        for radius in range(3, GRID_WIDTH + 1):
+        for radius in range(2, GRID_WIDTH + 1):
             best_col = -1
             best_score = 0
             for offset in range(-radius, radius + 1):
@@ -144,7 +141,7 @@ def run_galaga_sim(initial_grid):
     frames_shooting = 0
     frames_allowed = 6
 
-    # 480 frames yields a smooth ~48-second loop with extensive action
+    # 480 frames yields a smooth 48-second loop with rich action
     MAX_SIM_FRAMES = 480
     
     for frame_idx in range(MAX_SIM_FRAMES):
@@ -205,7 +202,7 @@ def run_galaga_sim(initial_grid):
                     bullets.append({
                         "id": next_bullet_id,
                         "x": target_x,
-                        "y": SHIP_Y - 1.0
+                        "y": SHIP_Y - 0.8
                     })
                     next_bullet_id += 1
                 frames_shooting += 1
@@ -312,9 +309,10 @@ def generate_svg(initial_grid, month_labels, game_history, cell_events, explosio
     empty_border = theme_cfg["empty_border"]
     
     svg_width = GRID_WIDTH * (CELL_SIZE + GAP_SIZE) # 1166
-    svg_height = GRID_HEIGHT * (CELL_SIZE + GAP_SIZE) + 15 + 90 # 259
+    svg_height = 260
     total_frames = len(game_history)
     total_dur = max(int(total_frames * DELTA_TIME / 2), 1000)
+    ship_svg_y = to_svg_y(SHIP_Y) # 224.0
     
     svg = f'<svg width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" xmlns="http://www.w3.org/2000/svg">'
     svg += f'<desc>Generated with galaga-contribution-graph</desc>'
@@ -363,7 +361,7 @@ def generate_svg(initial_grid, month_labels, game_history, cell_events, explosio
 \t\t\t\t\tvalues="{vals}" keyTimes="{kt}"/>
 \t\t\t</rect>'''
             
-    # 5. Bullets
+    # 5. Dual Plasma Lasers (Pure vector rectangles with glowing cyan aura and white plasma core)
     flights = extract_bullet_flights(game_history)
     for flight in flights:
         svg_x = to_svg_x(flight["x"])
@@ -403,15 +401,19 @@ def generate_svg(initial_grid, month_labels, game_history, cell_events, explosio
         pos_kt_str = ";".join(str(t) for t in pos_kt)
         pos_vals_str = ";".join(pos_vals)
         
-        svg += f'''<image x="-5" y="-13" width="10" height="13" href="{BULLET_IMAGE_DATA}" opacity="0" preserveAspectRatio="xMidYMid meet">
+        svg += f'''<g opacity="0">
 \t\t\t\t<animate attributeName="opacity" calcMode="discrete" dur="{total_dur}ms" repeatCount="indefinite"
 \t\t\t\t\tkeyTimes="{op_kt}" values="{op_vals}"/>
 \t\t\t\t<animateTransform attributeName="transform" type="translate" calcMode="linear"
 \t\t\t\t\tdur="{total_dur}ms" repeatCount="indefinite"
 \t\t\t\t\tkeyTimes="{pos_kt_str}" values="{pos_vals_str}"/>
-\t\t\t</image>'''
+\t\t\t\t<rect x="-10" y="-12" width="2.5" height="12" rx="1.2" fill="#38bdf8"/>
+\t\t\t\t<rect x="-9.5" y="-10" width="1.5" height="8" rx="0.7" fill="#ffffff"/>
+\t\t\t\t<rect x="7.5" y="-12" width="2.5" height="12" rx="1.2" fill="#38bdf8"/>
+\t\t\t\t<rect x="8" y="-10" width="1.5" height="8" rx="0.7" fill="#ffffff"/>
+\t\t\t</g>'''
         
-    # 6. Explosions
+    # 6. Explosions (Expanding rings and 4 flying sparks)
     for exp in explosion_events:
         cx = f"{to_svg_x(exp['x']) + CELL_SIZE / 2:.1f}"
         cy = f"{to_svg_y(exp['y']) + CELL_SIZE / 2:.1f}"
@@ -439,15 +441,41 @@ def generate_svg(initial_grid, month_labels, game_history, cell_events, explosio
 \t\t\t\t<animate attributeName="opacity" calcMode="linear" dur="{total_dur}ms" repeatCount="indefinite" keyTimes="{kt}" values="{op_vals}"/>
 \t\t\t</circle>'''
             
-    # 7. Ship
-    ship_positions = [f"{to_svg_x(f['ship']['x']):.1f},{to_svg_y(SHIP_Y):.1f}" for f in game_history]
+    # 7. Pure Vector Galaga Fighter Rocket (Visible on all browsers and GitHub Camo)
+    ship_positions = [f"{to_svg_x(f['ship']['x']):.1f},{ship_svg_y:.1f}" for f in game_history]
     ship_kt, ship_vals = build_changing_values_animation(ship_positions, total_frames)
-    svg += f'''<image x="-16" y="-35" width="32" height="35" href="{SHIP_IMAGE_DATA}" preserveAspectRatio="xMidYMid meet">
+    
+    svg += f'''<g id="galaga-rocket">
 \t\t<animateTransform attributeName="transform" type="translate" calcMode="linear"
 \t\t\tdur="{total_dur}ms" repeatCount="indefinite"
 \t\t\tkeyTimes="{ship_kt}"
 \t\t\tvalues="{ship_vals}"/>
-\t</image>'''
+\t\t<!-- Animated Thruster Flame -->
+\t\t<polygon points="-4,10 0,22 4,10" fill="#f59e0b">
+\t\t\t<animate attributeName="points" dur="200ms" repeatCount="indefinite"
+\t\t\t\tvalues="-4,10 0,22 4,10; -4,10 0,16 4,10; -4,10 0,24 4,10; -4,10 0,19 4,10; -4,10 0,22 4,10"/>
+\t\t</polygon>
+\t\t<polygon points="-2,10 0,16 2,10" fill="#fef08a">
+\t\t\t<animate attributeName="points" dur="200ms" repeatCount="indefinite"
+\t\t\t\tvalues="-2,10 0,16 2,10; -2,10 0,12 2,10; -2,10 0,17 2,10; -2,10 0,14 2,10; -2,10 0,16 2,10"/>
+\t\t</polygon>
+\t\t<!-- Aerodynamic Swept Wings -->
+\t\t<polygon points="0,-12 17,8 13,12 0,5 -13,12 -17,8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+\t\t<!-- Wingtips: Galaga Red Accents -->
+\t\t<polygon points="12,4 17,8 13,12" fill="#ef4444"/>
+\t\t<polygon points="-12,4 -17,8 -13,12" fill="#ef4444"/>
+\t\t<!-- Main Fuselage -->
+\t\t<polygon points="0,-18 7,-2 5,10 -5,10 -7,-2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+\t\t<!-- Galaga Center Fin & Intake -->
+\t\t<polygon points="0,-14 3,-2 0,4 -3,-2" fill="#ef4444"/>
+\t\t<!-- Glowing Cyan Cockpit Canopy -->
+\t\t<polygon points="0,-7 3,0 0,3 -3,0" fill="#38bdf8" stroke="#0ea5e9" stroke-width="0.5"/>
+\t\t<!-- Twin Plasma Cannons with Charged Muzzle Tips -->
+\t\t<line x1="-11" y1="2" x2="-11" y2="-8" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+\t\t<line x1="11" y1="2" x2="11" y2="-8" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+\t\t<circle cx="-11" cy="-8" r="1.5" fill="#38bdf8"/>
+\t\t<circle cx="11" cy="-8" r="1.5" fill="#38bdf8"/>
+\t</g>'''
     
     svg += '</svg>'
     return svg
@@ -494,7 +522,7 @@ def main():
     sz_light = os.path.getsize(light_path)
     print(f"  -> Generated {os.path.basename(light_path)} ({sz_light} bytes, {sz_light/1024:.1f} KB)")
     
-    print("[SUCCESS] Authentic Galaga contribution graphs successfully built.")
+    print("[SUCCESS] Authentic Galaga contribution graphs successfully built with pure vector rocket.")
 
 if __name__ == "__main__":
     main()
