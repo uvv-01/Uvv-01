@@ -1,2 +1,1 @@
-# CP Profile Generator - no external dependencies required
-# Uses only Python standard library (urllib, json, re)
+Pillow>=10.0.0

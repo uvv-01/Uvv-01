@@ -1,13 +1,13 @@
-name: Generate CP Profile SVG
+name: Generate Profile Assets
 
 on:
   schedule:
     - cron: "0 */6 * * *"  # Every 6 hours
   workflow_dispatch:  # Manual trigger
   push:
-    branches: [main]
+    branches: [main, master]
     paths:
-      - 'scripts/build_cp_profile.py'
+      - 'scripts/**'
       - '.github/workflows/cp-profile.yml'
 
 jobs:
@@ -25,13 +25,16 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run CP Profile Generator
-        run: python3 scripts/build_cp_profile.py
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run Master Asset Generator
+        run: python3 scripts/build_all.py
 
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet assets/cp-profile.svg 2>/dev/null; then
+          if git diff --quiet assets/ 2>/dev/null; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -40,8 +43,8 @@ jobs:
       - name: Commit and push if changed
         if: steps.changes.outputs.changed == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/cp-profile.svg
-          git commit -m "Update CP profile dashboard"
+          git config user.name "Yuvraj Singh"
+          git config user.email "yuvrajsinghdnb336@gmail.com"
+          git add assets/
+          git commit -m "Update profile dashboard assets"
           git push

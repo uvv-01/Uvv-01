@@ -530,6 +530,11 @@ def main():
 
     print(f"SVG written to {output_path}")
     print(f"File size: {len(svg_content)} bytes")
+    try:
+        from build_coding_profile import main as build_coding_main
+        build_coding_main()
+    except Exception as e:
+        print(f"Notice: {e}")
     return True
 
 
