@@ -1092,7 +1092,7 @@
 					values="#9be9a8;#9be9a8" keyTimes="0;1"/>
 			</rect><rect x="1144" y="15" width="20" height="20" rx="3" fill="transparent">
 				<animate attributeName="fill" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
-					values="#30a14e;#30a14e" keyTimes="0;1"/>
+					values="#40c463;#40c463" keyTimes="0;1"/>
 			</rect><rect x="1144" y="37" width="20" height="20" rx="3" fill="transparent">
 				<animate attributeName="fill" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
 					values="#40c463;#40c463" keyTimes="0;1"/>
@@ -1101,7 +1101,7 @@
 					values="#40c463;#40c463" keyTimes="0;1"/>
 			</rect><rect x="1144" y="81" width="20" height="20" rx="3" fill="transparent">
 				<animate attributeName="fill" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
-					values="#30a14e;#30a14e" keyTimes="0;1"/>
+					values="#40c463;#40c463" keyTimes="0;1"/>
 			</rect><rect x="1144" y="103" width="20" height="20" rx="3" fill="transparent">
 				<animate attributeName="fill" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
 					values="#40c463;#40c463" keyTimes="0;1"/>
