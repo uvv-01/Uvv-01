@@ -1,18 +1,4 @@
-#!/usr/bin/env python3
-"""
-Contact Scroll Preview Generator
-Generates a realistic, aged parchment scroll preview SVG for the GitHub README.
-Links to the interactive unrolling page (scroll.html).
-Uses a palette of parchment cream, ochre, sepia, and dark walnut wood.
-"""
-
-import os
-
-def generate_contact_scroll_svg():
-    W = 960
-    H = 150
-
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="{H}">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 150" width="100%" height="150">
   <defs>
     <!-- Background Slate Panel -->
     <linearGradient id="scroll-panel-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -56,37 +42,37 @@ def generate_contact_scroll_svg():
   </defs>
 
   <style>
-    .dispatch-title {{
+    .dispatch-title {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
       fill: #8b949e;
-    }}
-    .callout-text {{
+    }
+    .callout-text {
       font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 1.5px;
       fill: #f0f6fc;
-    }}
-    .sub-callout {{
+    }
+    .sub-callout {
       font-family: 'Consolas', 'Courier New', monospace;
       font-size: 11px;
       fill: #8b949e;
-    }}
+    }
   </style>
 
   <!-- Container Panel Base -->
-  <rect x="8" y="8" width="{W - 16}" height="{H - 16}" rx="8" fill="url(#scroll-panel-bg)" filter="url(#soft-depth)"/>
-  <rect x="8" y="8" width="{W - 16}" height="{H - 16}" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
-  <line x1="20" y1="9" x2="{W - 20}" y2="9" stroke="#30363d" stroke-width="1" stroke-opacity="0.6"/>
+  <rect x="8" y="8" width="944" height="134" rx="8" fill="url(#scroll-panel-bg)" filter="url(#soft-depth)"/>
+  <rect x="8" y="8" width="944" height="134" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
+  <line x1="20" y1="9" x2="940" y2="9" stroke="#30363d" stroke-width="1" stroke-opacity="0.6"/>
 
   <!-- Top Dispatch Header -->
   <text x="24" y="28" class="dispatch-title">CONTACT DISPATCH</text>
-  <text x="{W - 24}" y="28" text-anchor="end" class="dispatch-title">HISTORICAL ARCHIVE</text>
-  <line x1="24" y1="36" x2="{W - 24}" y2="36" stroke="#21262d" stroke-width="1"/>
+  <text x="936" y="28" text-anchor="end" class="dispatch-title">HISTORICAL ARCHIVE</text>
+  <line x1="24" y1="36" x2="936" y2="36" stroke="#21262d" stroke-width="1"/>
 
   <!-- Center Scroll Representation -->
   <!-- Top Wooden Roller Spindle -->
@@ -119,19 +105,7 @@ def generate_contact_scroll_svg():
   </g>
 
   <!-- Bottom Interactive Status Hint -->
-  <text x="{W / 2}" y="128" text-anchor="middle" class="sub-callout">
+  <text x="480.0" y="128" text-anchor="middle" class="sub-callout">
     [ Interactive Manuscript: GitHub · LinkedIn · Email Direct ]
   </text>
-</svg>'''
-
-    out_dir = os.path.join(os.path.dirname(__file__), "..", "assets")
-    out_path = os.path.join(out_dir, "contact-scroll.svg")
-    out_path = os.path.normpath(out_path)
-    os.makedirs(out_dir, exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(svg)
-    print(f"Contact Scroll preview SVG created: {out_path} ({len(svg)} bytes)")
-    return True
-
-if __name__ == "__main__":
-    generate_contact_scroll_svg()
+</svg>

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Gaming Coding Profile Dashboard Generator
-Generates a competitive video game player-statistics HUD for LeetCode, Codeforces, and CodeChef.
-Fetches authentic real-time data with reliable fallbacks and non-breaking error handling.
+Generates a realistic, professional competitive player-statistics screen for LeetCode, Codeforces, and CodeChef.
+Uses restrained visual effects, believable panel depth, fine borders, and authentic data.
 """
 
 import json
@@ -17,7 +17,7 @@ LEETCODE_USERNAME = os.environ.get("LEETCODE_USERNAME", "TUS8Mufpy3")
 CODECHEF_USERNAME = os.environ.get("CODECHEF_USERNAME", "uvv_0000")
 CODEFORCES_USERNAME = os.environ.get("CODEFORCES_USERNAME", None)  # None until configured
 
-# Authentic cached fallbacks in case APIs are temporarily unreachable or rate-limited
+# Authentic cached fallbacks
 FALLBACK_DATA = {
     "leetcode": {
         "handle": "TUS8Mufpy3",
@@ -40,7 +40,7 @@ FALLBACK_DATA = {
         "stars": "1★",
         "division": "Div 4",
     },
-    "codeforces": None  # Genuinely unconfigured
+    "codeforces": None
 }
 
 def fetch_json(url, headers=None, data=None, timeout=8):
@@ -52,7 +52,7 @@ def fetch_json(url, headers=None, data=None, timeout=8):
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read().decode("utf-8"))
     except Exception as e:
-        print(f"  [Notice] API fetch notice for {url}: {e}", file=sys.stderr)
+        print(f"  [Notice] API notice for {url}: {e}", file=sys.stderr)
         return None
 
 def get_leetcode_data(username):
@@ -62,7 +62,6 @@ def get_leetcode_data(username):
     res = dict(FALLBACK_DATA["leetcode"])
     res["handle"] = username
 
-    # Fetch stats
     stats = fetch_json(f"https://leetcode-stats-api.vercel.app/{username}")
     if stats and "totalSolved" in stats:
         res["solved"] = stats.get("totalSolved", res["solved"])
@@ -70,7 +69,6 @@ def get_leetcode_data(username):
         res["medium"] = stats.get("mediumSolved", res["medium"])
         res["hard"] = stats.get("hardSolved", res["hard"])
 
-    # Fetch contest ranking and history via official GraphQL
     query = """
     query userContestRankingInfo($username: String!) {
       userContestRanking(username: $username) {
@@ -177,7 +175,6 @@ def get_codeforces_data(handle):
 # ─── SVG Construction ────────────────────────────────────────────────────────
 
 def build_sparkline(history, x, y, w, h, line_color, grad_id):
-    """Generate SVG sparkline path and dots for rating history."""
     if not history or len(history) < 2:
         return ""
 
@@ -185,8 +182,8 @@ def build_sparkline(history, x, y, w, h, line_color, grad_id):
     max_val = max(history)
     val_range = max_val - min_val if max_val != min_val else 1
 
-    padding_x = 10
-    padding_y = 12
+    padding_x = 8
+    padding_y = 10
     draw_w = w - 2 * padding_x
     draw_h = h - 2 * padding_y
 
@@ -197,139 +194,139 @@ def build_sparkline(history, x, y, w, h, line_color, grad_id):
         py = y + h - padding_y - ((val - min_val) / val_range) * draw_h
         pts.append((px, py))
 
-    # Path string
     d_path = f"M {pts[0][0]:.1f} {pts[0][1]:.1f}"
     for px, py in pts[1:]:
         d_path += f" L {px:.1f} {py:.1f}"
 
-    # Gradient fill area
-    d_fill = f"{d_path} L {pts[-1][0]:.1f} {y + h - 2} L {pts[0][0]:.1f} {y + h - 2} Z"
+    d_fill = f"{d_path} L {pts[-1][0]:.1f} {y + h - 1} L {pts[0][0]:.1f} {y + h - 1} Z"
 
     svg_parts = []
-    # Grid lines inside sparkline box
-    svg_parts.append(f'<line x1="{x}" y1="{y + h // 2}" x2="{x + w}" y2="{y + h // 2}" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 3"/>')
-    svg_parts.append(f'<line x1="{x}" y1="{y + h - 2}" x2="{x + w}" y2="{y + h - 2}" stroke="#1e293b" stroke-width="1"/>')
+    # Subtle horizontal grid line in well
+    svg_parts.append(f'<line x1="{x}" y1="{y + h // 2}" x2="{x + w}" y2="{y + h // 2}" stroke="#21262d" stroke-width="1" stroke-dasharray="2 3"/>')
+    svg_parts.append(f'<line x1="{x}" y1="{y + h - 1}" x2="{x + w}" y2="{y + h - 1}" stroke="#21262d" stroke-width="1"/>')
 
-    # Filled area
-    svg_parts.append(f'<path d="{d_fill}" fill="url(#{grad_id})" opacity="0.3"/>')
-    # Glowing line
-    svg_parts.append(f'<path d="{d_path}" fill="none" stroke="{line_color}" stroke-width="2.5" filter="url(#neon-glow)" stroke-linecap="round"/>')
-    svg_parts.append(f'<path d="{d_path}" fill="none" stroke="{line_color}" stroke-width="2" stroke-linecap="round"/>')
+    # Restrained gradient fill (under 12% opacity)
+    svg_parts.append(f'<path d="{d_fill}" fill="url(#{grad_id})" opacity="0.12"/>')
+    # Clean, crisp stroke line
+    svg_parts.append(f'<path d="{d_path}" fill="none" stroke="{line_color}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>')
 
     # Data points
     for i, (px, py) in enumerate(pts):
-        if i == 0 or i == n - 1 or history[i] == max_val:
-            svg_parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3" fill="#ffffff" stroke="{line_color}" stroke-width="1.5"/>')
+        if i == n - 1 or history[i] == max_val:
+            svg_parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="2.5" fill="#f0f6fc" stroke="{line_color}" stroke-width="1.25"/>')
         else:
-            svg_parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="1.5" fill="{line_color}"/>')
+            svg_parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="1.5" fill="{line_color}" opacity="0.8"/>')
 
     # Labels for min and max
-    svg_parts.append(f'<text x="{x + 6}" y="{y + 12}" fill="#64748b" font-size="9" font-family="Consolas, monospace">PEAK: {max_val}</text>')
-    svg_parts.append(f'<text x="{x + w - 6}" y="{y + h - 6}" text-anchor="end" fill="#64748b" font-size="9" font-family="Consolas, monospace">BASE: {min_val}</text>')
+    svg_parts.append(f'<text x="{x + 6}" y="{y + 11}" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">PEAK {max_val}</text>')
+    svg_parts.append(f'<text x="{x + w - 6}" y="{y + h - 5}" text-anchor="end" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">MIN {min_val}</text>')
 
     return "\n".join(svg_parts)
 
 def build_dashboard_svg(lc_data, cf_data, cc_data):
     W = 960
-    H = 460
+    H = 416
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="{H}">
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="db-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#060913"/>
-      <stop offset="50%" stop-color="#0a101d"/>
-      <stop offset="100%" stop-color="#070a14"/>
+    <!-- Dark matte slate panel gradients -->
+    <linearGradient id="main-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121720"/>
+      <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
 
-    <!-- Card Gradients -->
-    <linearGradient id="card-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#121829" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#0b101d" stop-opacity="0.95"/>
+    <linearGradient id="card-panel-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#181e28"/>
+      <stop offset="100%" stop-color="#121720"/>
     </linearGradient>
 
-    <linearGradient id="lc-area" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffa116" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#ffa116" stop-opacity="0.0"/>
-    </linearGradient>
-
-    <linearGradient id="cf-area" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0.0"/>
-    </linearGradient>
-
-    <linearGradient id="cc-area" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6"/>
+    <!-- Restrained graph fills -->
+    <linearGradient id="lc-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
       <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
     </linearGradient>
 
-    <!-- Glow Filters -->
-    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2.5" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <linearGradient id="cf-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.0"/>
+    </linearGradient>
 
-    <filter id="hud-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <linearGradient id="cc-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Controlled physical drop shadow -->
+    <filter id="panel-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"/>
     </filter>
   </defs>
 
   <style>
-    @keyframes pulse-dot {{
-      0%, 100% {{ opacity: 1; }}
-      50% {{ opacity: 0.3; }}
-    }}
-    .live-dot {{
-      animation: pulse-dot 2s ease-in-out infinite;
-    }}
-    .hud-title {{
-      font-family: 'Rajdhani', 'Orbitron', 'Segoe UI', system-ui, sans-serif;
-      font-weight: 700;
+    .header-label {{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
       letter-spacing: 2px;
+      fill: #8b949e;
     }}
-    .mono {{
+    .platform-name {{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      fill: #f0f6fc;
+    }}
+    .stat-label {{
       font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      fill: #8b949e;
     }}
-    .card-wrap {{
-      transition: transform 0.3s ease, filter 0.3s ease;
+    .rating-val {{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Display', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      fill: #f0f6fc;
     }}
-    .card-wrap:hover {{
-      transform: translateY(-4px);
+    .meta-val {{
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11px;
+      fill: #8b949e;
+    }}
+    .meta-highlight {{
+      font-weight: 700;
+      fill: #f0f6fc;
+    }}
+    .card-shell {{
+      transition: transform 0.2s ease, stroke 0.2s ease;
+    }}
+    .card-shell:hover {{
+      transform: translateY(-2px);
     }}
   </style>
 
-  <!-- Outer Background Container -->
-  <rect x="0" y="0" width="{W}" height="{H}" rx="12" fill="url(#db-bg)"/>
-  <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="11" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Container Base -->
+  <rect x="8" y="8" width="{W - 16}" height="{H - 16}" rx="8" fill="url(#main-bg)" filter="url(#panel-shadow)"/>
+  <rect x="8" y="8" width="{W - 16}" height="{H - 16}" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
 
-  <!-- Top HUD Status Header -->
-  <path d="M 24 16 L 36 16 M {W-36} 16 L {W-24} 16" stroke="#00f0ff" stroke-width="2"/>
+  <!-- Top Bevel Highlight Edge -->
+  <line x1="20" y1="9" x2="{W - 20}" y2="9" stroke="#30363d" stroke-width="1" stroke-opacity="0.6"/>
+
+  <!-- Header Row -->
   <g transform="translate(24, 28)">
-    <text x="0" y="0" fill="#00f0ff" font-size="11" class="mono" font-weight="700" letter-spacing="2">
-      // COMPETITIVE GAMING DASHBOARD // TELEMETRY: SYNCHRONIZED
-    </text>
+    <text x="0" y="0" class="header-label">COMPETITIVE STATISTICS</text>
+    <text x="{W - 48}" y="0" text-anchor="end" class="header-label">VERIFIED TELEMETRY</text>
   </g>
-  <g transform="translate({W-160}, 28)">
-    <circle cx="0" cy="-3" r="4" fill="#00ff88" class="live-dot" filter="url(#neon-glow)"/>
-    <text x="12" y="0" fill="#00ff88" font-size="10" class="mono" font-weight="600" letter-spacing="1">LIVE HUD STATS</text>
-  </g>
-
-  <line x1="24" y1="42" x2="{W-24}" y2="42" stroke="#1e293b" stroke-width="1"/>
+  <line x1="24" y1="38" x2="{W - 24}" y2="38" stroke="#21262d" stroke-width="1"/>
 '''
 
-    # Layout for 3 cards
-    card_w = 286
-    card_h = 390
-    gap = 21
+    card_w = 288
+    card_h = 352
+    gap = 18
     cards_x = [24, 24 + card_w + gap, 24 + 2 * (card_w + gap)]
-    card_y = 52
+    card_y = 48
 
     # ══════════════════════════════════════════════════════════════════════════
     # CARD 1: LEETCODE
@@ -345,60 +342,56 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
 
     sparkline_lc = build_sparkline(
         lc_data.get("rating_history", []) if lc_data else [],
-        x1 + 16, card_y + 160, card_w - 32, 95,
-        "#ffa116", "lc-area"
+        x1 + 14, card_y + 138, card_w - 28, 86,
+        "#f59e0b", "lc-fill"
     )
 
     svg += f'''
   <!-- CARD 1: LEETCODE -->
-  <g class="card-wrap">
-    <!-- Card Frame -->
-    <rect x="{x1}" y="{card_y}" width="{card_w}" height="{card_h}" rx="10" fill="url(#card-grad)" stroke="#27354f" stroke-width="1.5"/>
-    <!-- Top Accent Bar -->
-    <path d="M {x1+8} {card_y} L {x1+card_w-8} {card_y}" stroke="#ffa116" stroke-width="3" stroke-linecap="round" filter="url(#neon-glow)"/>
-    
-    <!-- Platform Badge -->
-    <rect x="{x1+16}" y="{card_y+16}" width="78" height="22" rx="4" fill="#ffa116" fill-opacity="0.15" stroke="#ffa116" stroke-width="1"/>
-    <text x="{x1+55}" y="{card_y+31}" text-anchor="middle" fill="#ffa116" font-size="10" class="mono" font-weight="700">PLATFORM</text>
-    <text x="{x1+card_w-16}" y="{card_y+31}" text-anchor="end" fill="#64748b" font-size="10" class="mono">ID: {lc_data.get('handle', 'TUS8Mufpy3')}</text>
+  <g class="card-shell">
+    <rect x="{x1}" y="{card_y}" width="{card_w}" height="{card_h}" rx="6" fill="url(#card-panel-bg)" stroke="#30363d" stroke-width="1"/>
+    <!-- Controlled top accent line -->
+    <line x1="{x1+6}" y1="{card_y}" x2="{x1+card_w-6}" y2="{card_y}" stroke="#f59e0b" stroke-width="2"/>
 
-    <!-- Platform Name -->
-    <text x="{x1+16}" y="{card_y+62}" fill="#ffffff" font-size="18" class="hud-title">LEETCODE</text>
-    <text x="{x1+16}" y="{card_y+78}" fill="#94a3b8" font-size="10" class="mono">CONTEST RATING TELEMETRY</text>
+    <!-- Header & User -->
+    <text x="{x1+16}" y="{card_y+26}" class="platform-name">LEETCODE</text>
+    <text x="{x1+card_w-16}" y="{card_y+26}" text-anchor="end" class="meta-val">id: {lc_data.get('handle', 'TUS8Mufpy3')}</text>
 
     <!-- Rating Section -->
-    <rect x="{x1+16}" y="{card_y+88}" width="{card_w-32}" height="60" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
-    <text x="{x1+28}" y="{card_y+106}" fill="#64748b" font-size="9" class="mono" font-weight="600">CURRENT RATING</text>
-    <text x="{x1+28}" y="{card_y+136}" fill="#ffa116" font-size="28" class="hud-title" font-weight="800" filter="url(#neon-glow)">{lc_rating}</text>
+    <rect x="{x1+14}" y="{card_y+40}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <text x="{x1+26}" y="{card_y+58}" class="stat-label">CURRENT RATING</text>
+    <text x="{x1+26}" y="{card_y+94}" class="rating-val">{lc_rating}</text>
     
-    <text x="{x1+card_w-28}" y="{card_y+114}" text-anchor="end" fill="#94a3b8" font-size="10" class="mono">PEAK: <tspan fill="#ffffff" font-weight="700">{lc_peak}</tspan></text>
-    <text x="{x1+card_w-28}" y="{card_y+134}" text-anchor="end" fill="#94a3b8" font-size="10" class="mono">CONTESTS: <tspan fill="#ffa116" font-weight="700">{lc_contests}</tspan></text>
+    <text x="{x1+card_w-26}" y="{card_y+76}" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">{lc_peak}</tspan></text>
+    <text x="{x1+card_w-26}" y="{card_y+96}" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">{lc_contests}</tspan></text>
 
-    <!-- Rating Graph Area -->
-    <rect x="{x1+16}" y="{card_y+160}" width="{card_w-32}" height="95" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
+    <!-- Rating History Chart -->
+    <rect x="{x1+14}" y="{card_y+138}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     {sparkline_lc}
 
-    <!-- Statistics Section -->
-    <rect x="{x1+16}" y="{card_y+268}" width="{card_w-32}" height="106" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
-    <text x="{x1+26}" y="{card_y+286}" fill="#64748b" font-size="9" class="mono" font-weight="600">SOLVED PROBLEMS: {lc_solved}</text>
-    
-    <!-- Easy Bar -->
-    <text x="{x1+26}" y="{card_y+306}" fill="#22c55e" font-size="10" class="mono">EASY</text>
-    <text x="{x1+75}" y="{card_y+306}" fill="#ffffff" font-size="10" class="mono" font-weight="700">{lc_easy}</text>
-    <rect x="{x1+110}" y="{card_y+298}" width="{card_w-150}" height="8" rx="3" fill="#1e293b"/>
-    <rect x="{x1+110}" y="{card_y+298}" width="{int((card_w-150) * (lc_easy/lc_solved)) if lc_solved else 0}" height="8" rx="3" fill="#22c55e"/>
+    <!-- Solved Breakdown -->
+    <g transform="translate({x1+14}, {card_y+236})">
+      <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+      <text x="12" y="20" class="stat-label">PROBLEMS SOLVED ({lc_solved})</text>
+      
+      <!-- Progress Bar Breakdown -->
+      <g transform="translate(12, 32)">
+        <text x="0" y="14" fill="#238636" font-size="10" font-family="Consolas, monospace" font-weight="600">EASY</text>
+        <text x="45" y="14" class="meta-highlight" font-size="10" font-family="Consolas, monospace">{lc_easy}</text>
+        <rect x="80" y="6" width="{card_w-136}" height="8" rx="2" fill="#21262d"/>
+        <rect x="80" y="6" width="{int((card_w-136) * (lc_easy/lc_solved)) if lc_solved else 0}" height="8" rx="2" fill="#238636"/>
 
-    <!-- Medium Bar -->
-    <text x="{x1+26}" y="{card_y+328}" fill="#f59e0b" font-size="10" class="mono">MED</text>
-    <text x="{x1+75}" y="{card_y+328}" fill="#ffffff" font-size="10" class="mono" font-weight="700">{lc_med}</text>
-    <rect x="{x1+110}" y="{card_y+320}" width="{card_w-150}" height="8" rx="3" fill="#1e293b"/>
-    <rect x="{x1+110}" y="{card_y+320}" width="{int((card_w-150) * (lc_med/lc_solved)) if lc_solved else 0}" height="8" rx="3" fill="#f59e0b"/>
+        <text x="0" y="34" fill="#d29922" font-size="10" font-family="Consolas, monospace" font-weight="600">MED</text>
+        <text x="45" y="34" class="meta-highlight" font-size="10" font-family="Consolas, monospace">{lc_med}</text>
+        <rect x="80" y="26" width="{card_w-136}" height="8" rx="2" fill="#21262d"/>
+        <rect x="80" y="26" width="{int((card_w-136) * (lc_med/lc_solved)) if lc_solved else 0}" height="8" rx="2" fill="#d29922"/>
 
-    <!-- Hard Bar -->
-    <text x="{x1+26}" y="{card_y+350}" fill="#ef4444" font-size="10" class="mono">HARD</text>
-    <text x="{x1+75}" y="{card_y+350}" fill="#ffffff" font-size="10" class="mono" font-weight="700">{lc_hard}</text>
-    <rect x="{x1+110}" y="{card_y+342}" width="{card_w-150}" height="8" rx="3" fill="#1e293b"/>
-    <rect x="{x1+110}" y="{card_y+342}" width="{int((card_w-150) * (lc_hard/lc_solved)) if lc_solved else 0}" height="8" rx="3" fill="#ef4444"/>
+        <text x="0" y="54" fill="#da3633" font-size="10" font-family="Consolas, monospace" font-weight="600">HARD</text>
+        <text x="45" y="54" class="meta-highlight" font-size="10" font-family="Consolas, monospace">{lc_hard}</text>
+        <rect x="80" y="46" width="{card_w-136}" height="8" rx="2" fill="#21262d"/>
+        <rect x="80" y="46" width="{int((card_w-136) * (lc_hard/lc_solved)) if lc_solved else 0}" height="8" rx="2" fill="#da3633"/>
+      </g>
+    </g>
   </g>
 '''
 
@@ -413,70 +406,60 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
         cf_contests = cf_data.get("contests", 0)
         sparkline_cf = build_sparkline(
             cf_data.get("rating_history", []),
-            x2 + 16, card_y + 160, card_w - 32, 95,
-            "#00f0ff", "cf-area"
+            x2 + 14, card_y + 138, card_w - 28, 86,
+            "#94a3b8", "cf-fill"
         )
         cf_bottom = f'''
-        <text x="{x2+28}" y="{card_y+300}" fill="#94a3b8" font-size="11" class="mono">RANK: <tspan fill="#00f0ff" font-weight="700">{cf_rank}</tspan></text>
-        <text x="{x2+28}" y="{card_y+326}" fill="#94a3b8" font-size="11" class="mono">CONTESTS: <tspan fill="#ffffff" font-weight="700">{cf_contests}</tspan></text>
-        <text x="{x2+28}" y="{card_y+352}" fill="#94a3b8" font-size="11" class="mono">MAX RATING: <tspan fill="#00f0ff" font-weight="700">{cf_peak}</tspan></text>
+        <g transform="translate({x2+14}, {card_y+236})">
+          <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+          <text x="14" y="22" class="stat-label">COMPETITIVE METRICS</text>
+          <text x="14" y="46" class="meta-val">Rank: <tspan class="meta-highlight">{cf_rank}</tspan></text>
+          <text x="14" y="68" class="meta-val">Max Rating: <tspan class="meta-highlight">{cf_peak}</tspan></text>
+          <text x="14" y="90" class="meta-val">Rated Contests: <tspan class="meta-highlight">{cf_contests}</tspan></text>
+        </g>
         '''
     else:
-        # Authentic Unlinked / Placeholder State
         cf_rating = "—"
         sparkline_cf = f'''
-        <!-- Holographic Standby Radar -->
-        <g opacity="0.7">
-          <circle cx="{x2 + card_w//2}" cy="{card_y + 160 + 47}" r="32" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="4 4"/>
-          <circle cx="{x2 + card_w//2}" cy="{card_y + 160 + 47}" r="16" fill="none" stroke="#00f0ff" stroke-width="0.75"/>
-          <line x1="{x2 + card_w//2 - 40}" y1="{card_y + 160 + 47}" x2="{x2 + card_w//2 + 40}" y2="{card_y + 160 + 47}" stroke="#00f0ff" stroke-width="0.75" stroke-dasharray="2 4"/>
-          <line x1="{x2 + card_w//2}" y1="{card_y + 160 + 10}" x2="{x2 + card_w//2}" y2="{card_y + 160 + 85}" stroke="#00f0ff" stroke-width="0.75" stroke-dasharray="2 4"/>
-          <text x="{x2 + card_w//2}" y="{card_y + 160 + 51}" text-anchor="middle" fill="#00f0ff" font-size="9" class="mono" font-weight="700">STANDBY</text>
+        <g opacity="0.6">
+          <line x1="{x2+24}" y1="{card_y+181}" x2="{x2+card_w-24}" y2="{card_y+181}" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="{x2+card_w//2}" y="{card_y+176}" text-anchor="middle" fill="#8b949e" font-size="11" font-family="-apple-system, sans-serif" font-weight="600">Account Unlinked</text>
+          <text x="{x2+card_w//2}" y="{card_y+194}" text-anchor="middle" fill="#6e7681" font-size="9" font-family="Consolas, monospace">Set handle in config to sync graph</text>
         </g>
         '''
         cf_bottom = f'''
-        <!-- Awaiting Configuration Notice -->
-        <g transform="translate({x2+16}, {card_y+268})">
-          <rect x="0" y="0" width="{card_w-32}" height="106" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
-          <text x="14" y="24" fill="#38bdf8" font-size="10" class="mono" font-weight="700">// TELEMETRY STANDBY</text>
-          <text x="14" y="44" fill="#94a3b8" font-size="10" class="mono">Status: Awaiting CF Handle</text>
-          <text x="14" y="64" fill="#64748b" font-size="9" class="mono">Set in build_cp_profile.py</text>
-          <text x="14" y="80" fill="#64748b" font-size="9" class="mono">to unlock live telemetry.</text>
-          <rect x="14" y="88" width="{card_w-60}" height="4" rx="2" fill="#1e293b"/>
-          <rect x="14" y="88" width="40" height="4" rx="2" fill="#00f0ff" opacity="0.6"/>
+        <g transform="translate({x2+14}, {card_y+236})">
+          <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+          <text x="14" y="22" class="stat-label">STATUS</text>
+          <text x="14" y="46" class="meta-val">Status: <tspan fill="#d29922" font-weight="600">Pending Setup</tspan></text>
+          <text x="14" y="66" fill="#8b949e" font-size="10" font-family="-apple-system, sans-serif">Provide Codeforces handle to</text>
+          <text x="14" y="82" fill="#8b949e" font-size="10" font-family="-apple-system, sans-serif">display live competitive statistics.</text>
         </g>
         '''
 
     svg += f'''
   <!-- CARD 2: CODEFORCES -->
-  <g class="card-wrap">
-    <!-- Card Frame -->
-    <rect x="{x2}" y="{card_y}" width="{card_w}" height="{card_h}" rx="10" fill="url(#card-grad)" stroke="#27354f" stroke-width="1.5"/>
-    <!-- Top Accent Bar -->
-    <path d="M {x2+8} {card_y} L {x2+card_w-8} {card_y}" stroke="#00f0ff" stroke-width="3" stroke-linecap="round" filter="url(#neon-glow)"/>
+  <g class="card-shell">
+    <rect x="{x2}" y="{card_y}" width="{card_w}" height="{card_h}" rx="6" fill="url(#card-panel-bg)" stroke="#30363d" stroke-width="1"/>
+    <line x1="{x2+6}" y1="{card_y}" x2="{x2+card_w-6}" y2="{card_y}" stroke="#64748b" stroke-width="2"/>
 
-    <!-- Platform Badge -->
-    <rect x="{x2+16}" y="{card_y+16}" width="78" height="22" rx="4" fill="#00f0ff" fill-opacity="0.15" stroke="#00f0ff" stroke-width="1"/>
-    <text x="{x2+55}" y="{card_y+31}" text-anchor="middle" fill="#00f0ff" font-size="10" class="mono" font-weight="700">PLATFORM</text>
-    <text x="{x2+card_w-16}" y="{card_y+31}" text-anchor="end" fill="#64748b" font-size="10" class="mono">{'ID: ' + cf_data['handle'] if cf_data else '[UNLINKED]'}</text>
-
-    <!-- Platform Name -->
-    <text x="{x2+16}" y="{card_y+62}" fill="#ffffff" font-size="18" class="hud-title">CODEFORCES</text>
-    <text x="{x2+16}" y="{card_y+78}" fill="#94a3b8" font-size="10" class="mono">COMPETITIVE ARENA</text>
+    <!-- Header & User -->
+    <text x="{x2+16}" y="{card_y+26}" class="platform-name">CODEFORCES</text>
+    <text x="{x2+card_w-16}" y="{card_y+26}" text-anchor="end" class="meta-val">{'id: ' + cf_data['handle'] if cf_data else '[unlinked]'}</text>
 
     <!-- Rating Section -->
-    <rect x="{x2+16}" y="{card_y+88}" width="{card_w-32}" height="60" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
-    <text x="{x2+28}" y="{card_y+106}" fill="#64748b" font-size="9" class="mono" font-weight="600">CURRENT RATING</text>
-    <text x="{x2+28}" y="{card_y+136}" fill="#00f0ff" font-size="28" class="hud-title" font-weight="800" filter="url(#neon-glow)">{cf_rating}</text>
+    <rect x="{x2+14}" y="{card_y+40}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <text x="{x2+26}" y="{card_y+58}" class="stat-label">CURRENT RATING</text>
+    <text x="{x2+26}" y="{card_y+94}" class="rating-val" fill="#8b949e">{cf_rating}</text>
     
-    <text x="{x2+card_w-28}" y="{card_y+114}" text-anchor="end" fill="#94a3b8" font-size="10" class="mono">STATUS: <tspan fill="{'#00ff88' if cf_data else '#38bdf8'}" font-weight="700">{'LINKED' if cf_data else 'PENDING'}</tspan></text>
-    <text x="{x2+card_w-28}" y="{card_y+134}" text-anchor="end" fill="#94a3b8" font-size="10" class="mono">TIER: <tspan fill="#00f0ff" font-weight="700">{'ARENA' if cf_data else 'UNSET'}</tspan></text>
+    <text x="{x2+card_w-26}" y="{card_y+76}" text-anchor="end" class="meta-val">Status: <tspan class="meta-highlight">{'Linked' if cf_data else 'Unlinked'}</tspan></text>
+    <text x="{x2+card_w-26}" y="{card_y+96}" text-anchor="end" class="meta-val">Rank: <tspan class="meta-highlight">{'Active' if cf_data else 'None'}</tspan></text>
 
-    <!-- Rating Graph Area -->
-    <rect x="{x2+16}" y="{card_y+160}" width="{card_w-32}" height="95" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
+    <!-- Rating History Chart / Empty Well -->
+    <rect x="{x2+14}" y="{card_y+138}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     {sparkline_cf}
 
-    <!-- Statistics Section -->
+    <!-- Bottom Stat Block -->
     {cf_bottom}
   </g>
 '''
@@ -493,46 +476,39 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
 
     sparkline_cc = build_sparkline(
         cc_data.get("rating_history", []) if cc_data else [],
-        x3 + 16, card_y + 160, card_w - 32, 95,
-        "#f59e0b", "cc-area"
+        x3 + 14, card_y + 138, card_w - 28, 86,
+        "#d97706", "cc-fill"
     )
 
     svg += f'''
   <!-- CARD 3: CODECHEF -->
-  <g class="card-wrap">
-    <!-- Card Frame -->
-    <rect x="{x3}" y="{card_y}" width="{card_w}" height="{card_h}" rx="10" fill="url(#card-grad)" stroke="#27354f" stroke-width="1.5"/>
-    <!-- Top Accent Bar -->
-    <path d="M {x3+8} {card_y} L {x3+card_w-8} {card_y}" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" filter="url(#neon-glow)"/>
+  <g class="card-shell">
+    <rect x="{x3}" y="{card_y}" width="{card_w}" height="{card_h}" rx="6" fill="url(#card-panel-bg)" stroke="#30363d" stroke-width="1"/>
+    <line x1="{x3+6}" y1="{card_y}" x2="{x3+card_w-6}" y2="{card_y}" stroke="#d97706" stroke-width="2"/>
 
-    <!-- Platform Badge -->
-    <rect x="{x3+16}" y="{card_y+16}" width="78" height="22" rx="4" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
-    <text x="{x3+55}" y="{card_y+31}" text-anchor="middle" fill="#f59e0b" font-size="10" class="mono" font-weight="700">PLATFORM</text>
-    <text x="{x3+card_w-16}" y="{card_y+31}" text-anchor="end" fill="#64748b" font-size="10" class="mono">ID: {cc_data.get('handle', 'uvv_0000')}</text>
-
-    <!-- Platform Name -->
-    <text x="{x3+16}" y="{card_y+62}" fill="#ffffff" font-size="18" class="hud-title">CODECHEF</text>
-    <text x="{x3+16}" y="{card_y+78}" fill="#94a3b8" font-size="10" class="mono">RATED STARTERS TELEMETRY</text>
+    <!-- Header & User -->
+    <text x="{x3+16}" y="{card_y+26}" class="platform-name">CODECHEF</text>
+    <text x="{x3+card_w-16}" y="{card_y+26}" text-anchor="end" class="meta-val">id: {cc_data.get('handle', 'uvv_0000')}</text>
 
     <!-- Rating Section -->
-    <rect x="{x3+16}" y="{card_y+88}" width="{card_w-32}" height="60" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
-    <text x="{x3+28}" y="{card_y+106}" fill="#64748b" font-size="9" class="mono" font-weight="600">CURRENT RATING</text>
-    <text x="{x3+28}" y="{card_y+136}" fill="#f59e0b" font-size="28" class="hud-title" font-weight="800" filter="url(#neon-glow)">{cc_rating}</text>
+    <rect x="{x3+14}" y="{card_y+40}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <text x="{x3+26}" y="{card_y+58}" class="stat-label">CURRENT RATING</text>
+    <text x="{x3+26}" y="{card_y+94}" class="rating-val">{cc_rating}</text>
     
-    <text x="{x3+card_w-28}" y="{card_y+114}" text-anchor="end" fill="#94a3b8" font-size="10" class="mono">PEAK: <tspan fill="#ffffff" font-weight="700">{cc_peak}</tspan></text>
-    <text x="{x3+card_w-28}" y="{card_y+134}" text-anchor="end" fill="#94a3b8" font-size="10" class="mono">CONTESTS: <tspan fill="#f59e0b" font-weight="700">{cc_contests}</tspan></text>
+    <text x="{x3+card_w-26}" y="{card_y+76}" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">{cc_peak}</tspan></text>
+    <text x="{x3+card_w-26}" y="{card_y+96}" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">{cc_contests}</tspan></text>
 
-    <!-- Rating Graph Area -->
-    <rect x="{x3+16}" y="{card_y+160}" width="{card_w-32}" height="95" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
+    <!-- Rating History Chart -->
+    <rect x="{x3+14}" y="{card_y+138}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     {sparkline_cc}
 
-    <!-- Statistics Section -->
-    <g transform="translate({x3+16}, {card_y+268})">
-      <rect x="0" y="0" width="{card_w-32}" height="106" rx="6" fill="#070d18" stroke="#1e293b" stroke-width="1"/>
-      <text x="14" y="24" fill="#f59e0b" font-size="10" class="mono" font-weight="700">// CONTEST TELEMETRY</text>
-      <text x="14" y="46" fill="#94a3b8" font-size="11" class="mono">DIVISION: <tspan fill="#ffffff" font-weight="700">{cc_div}</tspan></text>
-      <text x="14" y="68" fill="#94a3b8" font-size="11" class="mono">RATING STARS: <tspan fill="#f59e0b" font-weight="700">{cc_stars}</tspan></text>
-      <text x="14" y="90" fill="#94a3b8" font-size="11" class="mono">STARTERS LOGGED: <tspan fill="#ffffff" font-weight="700">{cc_contests} Contests</tspan></text>
+    <!-- Bottom Stat Block -->
+    <g transform="translate({x3+14}, {card_y+236})">
+      <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+      <text x="14" y="22" class="stat-label">STARTERS TELEMETRY</text>
+      <text x="14" y="46" class="meta-val">Tier: <tspan class="meta-highlight">{cc_div}</tspan></text>
+      <text x="14" y="68" class="meta-val">Star Rating: <tspan class="meta-highlight">{cc_stars}</tspan></text>
+      <text x="14" y="90" class="meta-val">Logged Contests: <tspan class="meta-highlight">{cc_contests} Contests</tspan></text>
     </g>
   </g>
 </svg>'''
@@ -540,7 +516,7 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
     return svg
 
 def main():
-    print("Generating Gaming Coding Profile Dashboard...")
+    print("Generating Refined Competitive Gaming Coding Profile...")
     lc_data = get_leetcode_data(LEETCODE_USERNAME)
     cf_data = get_codeforces_data(CODEFORCES_USERNAME)
     cc_data = get_codechef_data(CODECHEF_USERNAME)

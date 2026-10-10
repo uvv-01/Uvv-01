@@ -1,143 +1,108 @@
 #!/usr/bin/env python3
 """
 Header SVG Generator
-Generates a gaming HUD name banner for Yuvraj Singh.
+Refined professional header preserving the original double-box identity:
+╔══════════════════════════════════════════════════════╗
+║             Y U V R A J   S I N G H                  ║
+║         Competitive Programmer · Developer           ║
+╚══════════════════════════════════════════════════════╝
+Uses realistic lighting, subtle depth, restrained highlights, and clean typography.
 """
 
 import os
 
 def generate_header_svg():
     width = 960
-    height = 180
+    height = 148
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="{height}">
   <defs>
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#070a13"/>
-      <stop offset="50%" stop-color="#0b1220"/>
-      <stop offset="100%" stop-color="#080c16"/>
+    <!-- Subtle linear gradient for deep matte slate background -->
+    <linearGradient id="header-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121720"/>
+      <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
-    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="40%" stop-color="#00f0ff"/>
-      <stop offset="70%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#c084fc"/>
+
+    <!-- Subtle bevel top highlight -->
+    <linearGradient id="bevel-highlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#30363d" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#484f58" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#30363d" stop-opacity="0.3"/>
     </linearGradient>
-    <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0"/>
-      <stop offset="30%" stop-color="#00f0ff" stop-opacity="0.8"/>
-      <stop offset="50%" stop-color="#38bdf8" stop-opacity="1"/>
-      <stop offset="70%" stop-color="#c084fc" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#c084fc" stop-opacity="0"/>
+
+    <linearGradient id="line-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#21262d" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#30363d" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#484f58" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#30363d" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#21262d" stop-opacity="0"/>
     </linearGradient>
-    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur1"/>
-      <feGaussianBlur stdDeviation="8" result="blur2"/>
-      <feMerge>
-        <feMergeNode in="blur2"/>
-        <feMergeNode in="blur1"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+
+    <!-- Controlled, subtle depth shadow -->
+    <filter id="subtle-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"/>
     </filter>
-    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <pattern id="grid-pattern" width="24" height="24" patternUnits="userSpaceOnUse">
-      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4"/>
-    </pattern>
   </defs>
 
   <style>
-    @keyframes pulse-glow {{
-      0%, 100% {{ opacity: 0.8; filter: drop-shadow(0 0 6px #00f0ff); }}
-      50% {{ opacity: 1; filter: drop-shadow(0 0 14px #00f0ff); }}
+    .name-title {{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Display', Roboto, 'Inter', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 12px;
+      fill: #f0f6fc;
     }}
-    @keyframes scanline {{
-      0% {{ transform: translateY(0); }}
-      100% {{ transform: translateY(180px); }}
+    .sub-title {{
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      fill: #8b949e;
     }}
-    .glow-title {{
-      font-family: 'Rajdhani', 'Orbitron', 'Montserrat', 'Segoe UI', system-ui, sans-serif;
-      font-weight: 800;
-      letter-spacing: 14px;
-      animation: pulse-glow 4s ease-in-out infinite;
-    }}
-    .hud-label {{
+    .box-char {{
       font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      fill: #64748b;
-    }}
-    .hud-val {{
-      font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      font-weight: 600;
-      fill: #00f0ff;
+      font-size: 13px;
+      fill: #484f58;
     }}
   </style>
 
-  <!-- Background Base -->
-  <rect x="0" y="0" width="{width}" height="{height}" rx="12" fill="url(#bg-grad)"/>
-  <rect x="0" y="0" width="{width}" height="{height}" rx="12" fill="url(#grid-pattern)"/>
+  <!-- Panel Base with Controlled Shadow -->
+  <rect x="8" y="8" width="{width - 16}" height="{height - 16}" rx="8" fill="url(#header-bg)" filter="url(#subtle-shadow)"/>
+  <rect x="8" y="8" width="{width - 16}" height="{height - 16}" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
 
-  <!-- Radial Glow Behind Name -->
-  <circle cx="480" cy="90" r="140" fill="#00f0ff" opacity="0.07" filter="url(#neon-glow)"/>
+  <!-- Top Bevel Highlight Edge -->
+  <line x1="24" y1="9" x2="{width - 24}" y2="9" stroke="url(#bevel-highlight)" stroke-width="1"/>
 
-  <!-- Outer HUD Frame Chamfered Border -->
-  <path d="M 24 16 L 80 16 M {width - 80} 16 L {width - 24} 16 M {width - 16} 24 L {width - 16} 60 M {width - 16} {height - 60} L {width - 16} {height - 24} M {width - 24} {height - 16} L {width - 80} {height - 16} M 80 {height - 16} L 24 {height - 16} M 16 {height - 24} L 16 {height - 60} M 16 60 L 16 24" 
-        stroke="#00f0ff" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8"/>
+  <!-- Architectural Double-Frame (Tribute to original ╔══╗ terminal box) -->
+  <!-- Outer Box -->
+  <rect x="22" y="20" width="{width - 44}" height="{height - 40}" rx="4" fill="none" stroke="#30363d" stroke-width="1.25"/>
+  <!-- Inner Box -->
+  <rect x="27" y="25" width="{width - 54}" height="{height - 50}" rx="2" fill="none" stroke="#21262d" stroke-width="1"/>
 
-  <!-- Inner HUD Border Lines -->
-  <rect x="20" y="20" width="{width - 40}" height="{height - 40}" rx="6" fill="none" stroke="#1e293b" stroke-width="1" stroke-dasharray="8 6"/>
+  <!-- Corner Double-Line Node Details (╔ ╗ ╚ ╝) -->
+  <!-- Top Left -->
+  <line x1="22" y1="20" x2="38" y2="20" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="22" y1="20" x2="22" y2="36" stroke="#8b949e" stroke-width="1.5"/>
+  <!-- Top Right -->
+  <line x1="{width - 38}" y1="20" x2="{width - 22}" y2="20" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="{width - 22}" y1="20" x2="{width - 22}" y2="36" stroke="#8b949e" stroke-width="1.5"/>
+  <!-- Bottom Left -->
+  <line x1="22" y1="{height - 20}" x2="38" y2="{height - 20}" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="22" y1="{height - 36}" x2="22" y2="{height - 20}" stroke="#8b949e" stroke-width="1.5"/>
+  <!-- Bottom Right -->
+  <line x1="{width - 38}" y1="{height - 20}" x2="{width - 22}" y2="{height - 20}" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="{width - 22}" y1="{height - 36}" x2="{width - 22}" y2="{height - 20}" stroke="#8b949e" stroke-width="1.5"/>
 
-  <!-- Corner Brackets -->
-  <path d="M 22 36 L 22 22 L 36 22" stroke="#00f0ff" stroke-width="2.5" fill="none"/>
-  <path d="M {width - 36} 22 L {width - 22} 22 L {width - 22} 36" stroke="#00f0ff" stroke-width="2.5" fill="none"/>
-  <path d="M 22 {height - 36} L 22 {height - 22} L 36 {height - 22}" stroke="#00f0ff" stroke-width="2.5" fill="none"/>
-  <path d="M {width - 36} {height - 22} L {width - 22} {height - 22} L {width - 22} {height - 36}" stroke="#00f0ff" stroke-width="2.5" fill="none"/>
+  <!-- Center Text Group -->
+  <!-- Main Name -->
+  <text x="480" y="68" text-anchor="middle" class="name-title">Y U V R A J   S I N G H</text>
 
-  <!-- HUD Top Header Info -->
-  <g transform="translate(36, 38)">
-    <circle cx="4" cy="0" r="3" fill="#22c55e"/>
-    <text x="14" y="3" class="hud-label">STATUS: <tspan class="hud-val">ONLINE</tspan></text>
-    <text x="150" y="3" class="hud-label">SYS.ID: <tspan class="hud-val">UVV-01</tspan></text>
-  </g>
-  <g transform="translate({width - 240}, 38)">
-    <text x="0" y="3" class="hud-label">MODE: <tspan class="hud-val">COMPETITIVE</tspan></text>
-    <text x="130" y="3" class="hud-label">LVL: <tspan class="hud-val">99</tspan></text>
-  </g>
+  <!-- Refined Center Divider Line -->
+  <line x1="320" y1="88" x2="640" y2="88" stroke="url(#line-divider)" stroke-width="1"/>
+  <polygon points="480,86 482,88 480,90 478,88" fill="#484f58"/>
 
-  <!-- Crosshairs -->
-  <g opacity="0.6">
-    <line x1="480" y1="24" x2="480" y2="34" stroke="#00f0ff" stroke-width="1"/>
-    <line x1="475" y1="29" x2="485" y2="29" stroke="#00f0ff" stroke-width="1"/>
-  </g>
-
-  <!-- Name Header -->
-  <g transform="translate(480, 102)" text-anchor="middle">
-    <!-- Glow Under-layer -->
-    <text x="0" y="0" font-size="44" fill="#00f0ff" class="glow-title" opacity="0.5" filter="url(#neon-glow)">YUVRAJ SINGH</text>
-    <!-- Sharp Foreground Text -->
-    <text x="0" y="0" font-size="44" fill="url(#text-grad)" class="glow-title" filter="url(#soft-glow)">YUVRAJ SINGH</text>
-  </g>
-
-  <!-- Cyber Subtitle / Underline -->
-  <line x1="180" y1="126" x2="{width - 180}" y2="126" stroke="url(#line-grad)" stroke-width="2"/>
-  
-  <!-- Reticle Diamonds on Line -->
-  <polygon points="480,123 483,126 480,129 477,126" fill="#00f0ff"/>
-  <polygon points="280,124 282,126 280,128 278,126" fill="#00f0ff" opacity="0.6"/>
-  <polygon points="680,124 682,126 680,128 678,126" fill="#c084fc" opacity="0.6"/>
-
-  <!-- Subtitle Tagline -->
-  <text x="480" y="148" text-anchor="middle" font-family="'Consolas', 'Courier New', monospace" font-size="11" letter-spacing="4" fill="#94a3b8">
-    // COMPETITIVE PROGRAMMING HUD // ARCHITECTURE &amp; SYSTEMS
-  </text>
+  <!-- Subtitle matching original identity -->
+  <text x="480" y="112" text-anchor="middle" class="sub-title">Competitive Programmer · Developer</text>
 </svg>'''
 
     out_path = os.path.join(os.path.dirname(__file__), '..', 'assets', 'header.svg')
@@ -145,7 +110,7 @@ def generate_header_svg():
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(svg)
-    print(f"Header generated at: {out_path} ({len(svg)} bytes)")
+    print(f"Header refined at: {out_path} ({len(svg)} bytes)")
 
 if __name__ == '__main__':
     generate_header_svg()
