@@ -13,7 +13,11 @@ Hi, I'm Yuvraj Singh.
 </div>
 
 <div align="center">
-  <img src="assets/contribution-shooter.gif" alt="Rocket Spaceship Contribution Shooter" width="100%"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/galaga-contribution-graph-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/galaga-contribution-graph.svg">
+    <img alt="Galaga Contribution Graph" src="assets/galaga-contribution-graph.svg" width="100%"/>
+  </picture>
 </div>
 
 <div align="center">

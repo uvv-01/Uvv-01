@@ -20,7 +20,7 @@ def main():
     scripts = [
         "build_header.py",
         "build_coding_profile.py",
-        "build_contribution_shooter.py",
+        "build_galaga_graph.py",
         "build_contact_scroll.py",
     ]
     for s in scripts:
