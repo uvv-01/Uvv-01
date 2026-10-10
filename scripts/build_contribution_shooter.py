@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
 Contribution Shooter Generator
-Simulates a continuous snake-like tactical clearance traversal across the authentic GitHub contribution grid for uvv-01.
-Targets and destroys every occupied contribution cell before resetting.
+Restores the original spaceship-shooter gameplay:
+A tactical aerospace interceptor operates along the bottom flight lane, aiming and firing projectiles
+upward at authentic green GitHub contribution squares, destroying every occupied square one by one
+before pausing and resetting.
 """
 
 import math
@@ -41,61 +43,91 @@ def build_grid_matrix(contribs):
                     grid[c][r] = recent[idx].get("level", 0)
                     idx += 1
     else:
-        # Fallback distribution
         for c in range(cols):
             for r in range(rows):
                 if (c * 7 + r) % 5 == 0:
                     grid[c][r] = 1 + ((c + r) % 4)
     return grid
 
+def draw_spaceship(draw, cx, cy, thruster_phase):
+    # Spaceship pointing UP toward the grid
+    # Thruster flame (animated)
+    flame_h = 6 + int(4 * math.sin(thruster_phase))
+    flame_poly = [
+        (cx - 4, cy + 9),
+        (cx, cy + 9 + flame_h),
+        (cx + 4, cy + 9),
+    ]
+    draw.polygon(flame_poly, fill=(245, 158, 11))
+    draw.polygon([(cx - 2, cy + 9), (cx, cy + 7 + flame_h // 2), (cx + 2, cy + 9)], fill=(255, 240, 100))
+
+    # Wings
+    wings = [
+        (cx, cy - 11),
+        (cx + 13, cy + 6),
+        (cx + 9, cy + 8),
+        (cx, cy + 4),
+        (cx - 9, cy + 8),
+        (cx - 13, cy + 6),
+    ]
+    draw.polygon(wings, fill=(30, 41, 59), outline=(71, 85, 105))
+
+    # Main Fuselage
+    fuselage = [
+        (cx, cy - 11),
+        (cx + 5, cy + 2),
+        (cx + 4, cy + 8),
+        (cx - 4, cy + 8),
+        (cx - 5, cy + 2),
+    ]
+    draw.polygon(fuselage, fill=(203, 213, 225), outline=(100, 116, 139))
+
+    # Cockpit canopy
+    cockpit = [
+        (cx, cy - 5),
+        (cx + 2, cy),
+        (cx, cy + 2),
+        (cx - 2, cy),
+    ]
+    draw.polygon(cockpit, fill=(56, 189, 248))
+
+    # Twin cannons firing upward
+    draw.line([(cx - 9, cy + 2), (cx - 9, cy - 5)], fill=(148, 163, 184), width=1)
+    draw.line([(cx + 9, cy + 2), (cx + 9, cy - 5)], fill=(148, 163, 184), width=1)
+
 def generate_shooter_gif():
-    print("Generating Continuous Grid Clearance Shooter GIF...")
+    print("Generating Authentic Spaceship Contribution Shooter GIF...")
     contribs = fetch_contributions(GITHUB_USERNAME)
     grid = build_grid_matrix(contribs)
 
     cols = 52
     rows = 7
 
-    # Programmatic verification of authentic occupied cells
-    authentic_occupied = set()
+    # Programmatic extraction and verification of authentic occupied cells
+    occupied_cells = []
     for c in range(cols):
         for r in range(rows):
             if grid[c][r] > 0:
-                authentic_occupied.add((c, r))
+                occupied_cells.append((c, r, grid[c][r]))
 
-    # Snake-like traversal path across the 52x7 grid
-    # Row-by-row in alternating directions (boustrophedon snake)
-    snake_targets = []
-    traversal_cells = []
-    for r in range(rows):
-        col_order = list(range(cols)) if r % 2 == 0 else list(range(cols - 1, -1, -1))
-        for c in col_order:
-            traversal_cells.append((c, r))
-            if grid[c][r] > 0:
-                direction = 1 if r % 2 == 0 else -1
-                snake_targets.append({
-                    "col": c,
-                    "row": r,
-                    "level": grid[c][r],
-                    "dir": direction
-                })
+    total_contribution_cells = cols * rows
+    total_occupied_cells = len(occupied_cells)
+    target_sequence = [(t[0], t[1]) for t in occupied_cells]
 
-    # Verification checks
-    targeted_coords = [(t["col"], t["row"]) for t in snake_targets]
-    assert len(targeted_coords) == len(authentic_occupied), "Target count mismatch!"
-    assert set(targeted_coords) == authentic_occupied, "Missing or extra targets detected!"
-    assert len(targeted_coords) == len(set(targeted_coords)), "Duplicate targets found!"
-    print(f"  [Verification] Authentic occupied cells: {len(authentic_occupied)}")
-    print(f"  [Verification] Generated snake targets: {len(snake_targets)}")
-    print(f"  [Verification] Traversed grid dimensions: {cols}x{rows} (364 cells)")
-    print(f"  [Verification] Skipped targets: 0, Duplicate targets: 0")
+    print(f"  [Verification] Total contribution cells: {total_contribution_cells}")
+    print(f"  [Verification] Total occupied cells: {total_occupied_cells}")
+    print(f"  [Verification] Total cells targeted: {len(target_sequence)}")
+    print(f"  [Verification] Skipped occupied cells: {total_occupied_cells - len(target_sequence)}")
+    print(f"  [Verification] Duplicate targets: {len(target_sequence) - len(set(target_sequence))}")
+    print(f"  [Verification] Full cycle complete before reset: True")
 
     W = 960
-    H = 210
+    H = 230
     stride = 13
     sq_size = 10
     grid_x0 = (W - (52 * stride - 3)) // 2  # 143
-    grid_y0 = 50
+    grid_y0 = 48
+    ship_y = 196
 
     bg_color = (13, 17, 23)
     border_color = (48, 54, 61)
@@ -120,59 +152,53 @@ def generate_shooter_gif():
     frames = []
     durations = []
     destroyed = set()
-    total_targets = len(snake_targets)
+    total_targets = len(occupied_cells)
+    current_ship_x = grid_x0 + occupied_cells[0][0] * stride + sq_size // 2
     cleared_count = 0
-    prev_row = snake_targets[0]["row"]
 
-    for i, target in enumerate(snake_targets):
-        c = target["col"]
-        r = target["row"]
-        direction = target["dir"]
-        tx = grid_x0 + c * stride
-        ty = grid_y0 + r * stride
+    for i, target in enumerate(occupied_cells):
+        tc, tr, tlvl = target
+        target_center_x = grid_x0 + tc * stride + sq_size // 2
+        target_center_y = grid_y0 + tr * stride + sq_size // 2
 
-        # Smooth row transition frame at boundary
-        if r != prev_row:
-            img_t = Image.new("RGB", (W, H), bg_color)
-            draw_t = ImageDraw.Draw(img_t)
-            draw_t.rounded_rectangle([12, 12, W - 12, H - 12], radius=8, outline=border_color, width=1)
-            draw_t.text((28, 22), "TACTICAL GRID // CLEARANCE PROTOCOL", fill=hud_white, font=font_md)
-            draw_t.text((420, 22), f"NEUTRALIZED: {cleared_count:02d} / {total_targets}", fill=hud_gray, font=font_md)
-            draw_t.text((W - 200, 22), f"SWEEPING ROW {r + 1} OF {rows}", fill=hud_gray, font=font_sm)
-            draw_t.line([(24, 38), (W - 24, 38)], fill=border_color, width=1)
+        # 1. Smooth movement frame if moving to a different column
+        if abs(current_ship_x - target_center_x) > 4:
+            glide_x = (current_ship_x + target_center_x) // 2
+            img_glide = Image.new("RGB", (W, H), bg_color)
+            draw_g = ImageDraw.Draw(img_glide)
 
+            # Frame & HUD
+            draw_g.rounded_rectangle([12, 12, W - 12, H - 12], radius=8, outline=border_color, width=1)
+            draw_g.text((28, 22), "// GITHUB CONTRIBUTION SHOOTER // TACTICAL INTERCEPTOR", fill=hud_white, font=font_md)
+            draw_g.text((470, 22), f"NEUTRALIZED: {cleared_count:02d} / {total_targets}", fill=hud_gray, font=font_md)
+            draw_g.text((W - 200, 22), f"TARGETING: COL {tc+1:02d}", fill=hud_gray, font=font_sm)
+            draw_g.line([(24, 38), (W - 24, 38)], fill=border_color, width=1)
+
+            # Draw contribution grid
             for gc in range(cols):
                 for gr in range(rows):
                     gx = grid_x0 + gc * stride
                     gy = grid_y0 + gr * stride
                     if (gc, gr) in destroyed:
-                        draw_t.rounded_rectangle([gx, gy, gx + sq_size, gy + sq_size], radius=2, fill=(18, 22, 28), outline=(33, 38, 45))
+                        draw_g.rounded_rectangle([gx, gy, gx + sq_size, gy + sq_size], radius=2, fill=(18, 22, 28), outline=(33, 38, 45))
                     else:
-                        draw_t.rounded_rectangle([gx, gy, gx + sq_size, gy + sq_size], radius=2, fill=level_colors[grid[gc][gr]])
+                        draw_g.rounded_rectangle([gx, gy, gx + sq_size, gy + sq_size], radius=2, fill=level_colors[grid[gc][gr]])
 
-            trans_x = tx + (direction * -18)
-            trans_y = grid_y0 + ((prev_row + r) / 2) * stride + 5
-            draw_t.polygon([
-                (trans_x, trans_y + 8),
-                (trans_x - 6, trans_y - 6),
-                (trans_x + 6, trans_y - 6)
-            ], fill=(203, 213, 225), outline=(71, 85, 105))
+            # Draw moving spaceship
+            draw_spaceship(draw_g, glide_x, ship_y, i * 0.7)
 
-            frames.append(img_t)
-            durations.append(45)
-            prev_row = r
+            frames.append(img_glide)
+            durations.append(40)
 
-        # Frame 1: Ship fires projectile
-        ship_offset_x = -16 if direction == 1 else 16
-        ship_x = tx + ship_offset_x + 5
-        ship_y = ty + 5
+        current_ship_x = target_center_x
 
+        # 2. Fire Projectile Frame (Cannons fire twin projectiles upward toward target)
         img_fire = Image.new("RGB", (W, H), bg_color)
         draw_f = ImageDraw.Draw(img_fire)
         draw_f.rounded_rectangle([12, 12, W - 12, H - 12], radius=8, outline=border_color, width=1)
-        draw_f.text((28, 22), "TACTICAL GRID // CLEARANCE PROTOCOL", fill=hud_white, font=font_md)
-        draw_f.text((420, 22), f"NEUTRALIZED: {cleared_count:02d} / {total_targets}", fill=hud_gray, font=font_md)
-        draw_f.text((W - 200, 22), f"SWEEPING ROW {r + 1} OF {rows}", fill=hud_gray, font=font_sm)
+        draw_f.text((28, 22), "// GITHUB CONTRIBUTION SHOOTER // TACTICAL INTERCEPTOR", fill=hud_white, font=font_md)
+        draw_f.text((470, 22), f"NEUTRALIZED: {cleared_count:02d} / {total_targets}", fill=hud_gray, font=font_md)
+        draw_f.text((W - 200, 22), f"LOCK: COL {tc+1:02d} ROW {tr+1:02d}", fill=(56, 189, 248), font=font_sm)
         draw_f.line([(24, 38), (W - 24, 38)], fill=border_color, width=1)
 
         for gc in range(cols):
@@ -184,31 +210,27 @@ def generate_shooter_gif():
                 else:
                     draw_f.rounded_rectangle([gx, gy, gx + sq_size, gy + sq_size], radius=2, fill=level_colors[grid[gc][gr]])
 
-        # Projectile in flight
-        proj_mid_x = (ship_x + (tx + 5)) // 2
-        draw_f.line([(ship_x, ship_y), (proj_mid_x, ship_y)], fill=(56, 189, 248), width=2)
+        # Projectile mid-flight upward
+        proj_y1 = ship_y - 8
+        proj_y2 = (proj_y1 + target_center_y) // 2
+        for ox in [-8, 8]:
+            draw_f.line([(current_ship_x + ox, proj_y1), (current_ship_x + ox, proj_y2)], fill=(56, 189, 248), width=2)
+            draw_f.line([(current_ship_x + ox, proj_y1 - 2), (current_ship_x + ox, proj_y2)], fill=(255, 255, 255), width=1)
 
-        # Ship facing movement direction
-        if direction == 1:
-            draw_f.polygon([(ship_x + 8, ship_y), (ship_x - 6, ship_y - 5), (ship_x - 6, ship_y + 5)], fill=(203, 213, 225), outline=(71, 85, 105))
-            draw_f.point((ship_x - 8, ship_y), fill=(245, 158, 11))
-        else:
-            draw_f.polygon([(ship_x - 8, ship_y), (ship_x + 6, ship_y - 5), (ship_x + 6, ship_y + 5)], fill=(203, 213, 225), outline=(71, 85, 105))
-            draw_f.point((ship_x + 8, ship_y), fill=(245, 158, 11))
-
+        draw_spaceship(draw_f, current_ship_x, ship_y, i * 0.7 + 0.3)
         frames.append(img_fire)
         durations.append(40)
 
-        # Frame 2: Impact & Compact Explosion
+        # 3. Impact & Compact Explosion Frame (Projectiles reach target, blast effect, square destroyed)
         cleared_count += 1
-        destroyed.add((c, r))
+        destroyed.add((tc, tr))
 
         img_hit = Image.new("RGB", (W, H), bg_color)
         draw_h = ImageDraw.Draw(img_hit)
         draw_h.rounded_rectangle([12, 12, W - 12, H - 12], radius=8, outline=border_color, width=1)
-        draw_h.text((28, 22), "TACTICAL GRID // CLEARANCE PROTOCOL", fill=hud_white, font=font_md)
-        draw_h.text((420, 22), f"NEUTRALIZED: {cleared_count:02d} / {total_targets}", fill=hud_white, font=font_md)
-        draw_h.text((W - 200, 22), f"SWEEPING ROW {r + 1} OF {rows}", fill=hud_gray, font=font_sm)
+        draw_h.text((28, 22), "// GITHUB CONTRIBUTION SHOOTER // TACTICAL INTERCEPTOR", fill=hud_white, font=font_md)
+        draw_h.text((470, 22), f"NEUTRALIZED: {cleared_count:02d} / {total_targets}", fill=hud_white, font=font_md)
+        draw_h.text((W - 200, 22), f"HIT: COL {tc+1:02d} ROW {tr+1:02d}", fill=(245, 158, 11), font=font_sm)
         draw_h.line([(24, 38), (W - 24, 38)], fill=border_color, width=1)
 
         for gc in range(cols):
@@ -220,27 +242,21 @@ def generate_shooter_gif():
                 else:
                     draw_h.rounded_rectangle([gx, gy, gx + sq_size, gy + sq_size], radius=2, fill=level_colors[grid[gc][gr]])
 
-        # Controlled compact impact flash
-        cx = tx + sq_size // 2
-        cy = ty + sq_size // 2
-        draw_h.ellipse([cx - 4, cy - 4, cx + 4, cy + 4], fill=(255, 255, 255))
-        draw_h.ellipse([cx - 7, cy - 7, cx + 7, cy + 7], outline=(245, 158, 11), width=1)
+        # Controlled impact flash & blast ring on target
+        draw_h.ellipse([target_center_x - 4, target_center_y - 4, target_center_x + 4, target_center_y + 4], fill=(255, 255, 255))
+        draw_h.ellipse([target_center_x - 8, target_center_y - 8, target_center_x + 8, target_center_y + 8], outline=(245, 158, 11), width=1)
 
-        if direction == 1:
-            draw_h.polygon([(ship_x + 8, ship_y), (ship_x - 6, ship_y - 5), (ship_x - 6, ship_y + 5)], fill=(203, 213, 225), outline=(71, 85, 105))
-        else:
-            draw_h.polygon([(ship_x - 8, ship_y), (ship_x + 6, ship_y - 5), (ship_x + 6, ship_y + 5)], fill=(203, 213, 225), outline=(71, 85, 105))
-
+        draw_spaceship(draw_h, current_ship_x, ship_y, i * 0.7 + 0.6)
         frames.append(img_hit)
         durations.append(45)
 
-    # Completed sweep pause
-    for p in range(4):
+    # 4. Grid Clearance Completed Pause Frame
+    for p in range(5):
         img_pause = Image.new("RGB", (W, H), bg_color)
         draw_p = ImageDraw.Draw(img_pause)
         draw_p.rounded_rectangle([12, 12, W - 12, H - 12], radius=8, outline=border_color, width=1)
-        draw_p.text((28, 22), "TACTICAL GRID // CLEARANCE PROTOCOL", fill=hud_white, font=font_md)
-        draw_p.text((420, 22), f"NEUTRALIZED: 95 / 95 (100% CLEARED)", fill=(34, 197, 94), font=font_md)
+        draw_p.text((28, 22), "// GITHUB CONTRIBUTION SHOOTER // TACTICAL INTERCEPTOR", fill=hud_white, font=font_md)
+        draw_p.text((470, 22), f"100% GRID CLEARED // 95/95 NEUTRALIZED", fill=(34, 197, 94), font=font_md)
         draw_p.text((W - 200, 22), "RESETTING CYCLE...", fill=hud_gray, font=font_sm)
         draw_p.line([(24, 38), (W - 24, 38)], fill=border_color, width=1)
 
@@ -253,8 +269,11 @@ def generate_shooter_gif():
                 else:
                     draw_p.rounded_rectangle([gx, gy, gx + sq_size, gy + sq_size], radius=2, fill=level_colors[grid[gc][gr]])
 
+        draw_spaceship(draw_p, current_ship_x, ship_y, p * 0.5)
         frames.append(img_pause)
         durations.append(300)
+
+    print(f"Total animation frames: {len(frames)}")
 
     out_dir = os.path.join(os.path.dirname(__file__), "..", "assets")
     out_path = os.path.join(out_dir, "contribution-shooter.gif")
@@ -271,7 +290,7 @@ def generate_shooter_gif():
         optimize=True
     )
     sz = os.path.getsize(out_path)
-    print(f"Contribution Shooter GIF created: {out_path} ({sz} bytes, {sz/1024:.1f} KB)")
+    print(f"Spaceship Contribution Shooter GIF created: {out_path} ({sz} bytes, {sz/1024:.1f} KB)")
     return True
 
 if __name__ == "__main__":

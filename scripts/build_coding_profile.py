@@ -2,6 +2,7 @@
 """
 Gaming Coding Profile Dashboard Generator
 Generates a realistic, professional competitive player-statistics screen for LeetCode, Codeforces, and CodeChef.
+Prominently displays both competitive ratings and verified problems solved.
 Uses restrained visual effects, believable panel depth, fine borders, and authentic data.
 """
 
@@ -39,6 +40,7 @@ FALLBACK_DATA = {
         "rating_history": [849, 878, 943, 1024, 1097, 1120, 1154, 1164, 1202, 1183, 1162],
         "stars": "1★",
         "division": "Div 4",
+        "solved": 74,
     },
     "codeforces": None
 }
@@ -142,6 +144,10 @@ def get_codechef_data(username):
         stars_match = re.search(r'<span class="rating">(\d+&#9733;|\d+★|\d+\s*★)</span>', html)
         if stars_match:
             res["stars"] = stars_match.group(1).replace("&#9733;", "★")
+
+        solved_match = re.search(r'Total Problems Solved:\s*(\d+)', html)
+        if solved_match:
+            res["solved"] = int(solved_match.group(1))
     except Exception as e:
         print(f"  [Notice] CodeChef scraping notice: {e}", file=sys.stderr)
 
@@ -162,6 +168,7 @@ def get_codeforces_data(handle):
         "rank": user.get("rank", "unrated").title(),
         "contests": 0,
         "rating_history": [],
+        "solved": 0,
     }
 
     rating_data = fetch_json(f"https://codeforces.com/api/user.rating?handle={handle}")
@@ -201,23 +208,17 @@ def build_sparkline(history, x, y, w, h, line_color, grad_id):
     d_fill = f"{d_path} L {pts[-1][0]:.1f} {y + h - 1} L {pts[0][0]:.1f} {y + h - 1} Z"
 
     svg_parts = []
-    # Subtle horizontal grid line in well
     svg_parts.append(f'<line x1="{x}" y1="{y + h // 2}" x2="{x + w}" y2="{y + h // 2}" stroke="#21262d" stroke-width="1" stroke-dasharray="2 3"/>')
     svg_parts.append(f'<line x1="{x}" y1="{y + h - 1}" x2="{x + w}" y2="{y + h - 1}" stroke="#21262d" stroke-width="1"/>')
-
-    # Restrained gradient fill (under 12% opacity)
     svg_parts.append(f'<path d="{d_fill}" fill="url(#{grad_id})" opacity="0.12"/>')
-    # Clean, crisp stroke line
     svg_parts.append(f'<path d="{d_path}" fill="none" stroke="{line_color}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>')
 
-    # Data points
     for i, (px, py) in enumerate(pts):
         if i == n - 1 or history[i] == max_val:
             svg_parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="2.5" fill="#f0f6fc" stroke="{line_color}" stroke-width="1.25"/>')
         else:
             svg_parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="1.5" fill="{line_color}" opacity="0.8"/>')
 
-    # Labels for min and max
     svg_parts.append(f'<text x="{x + 6}" y="{y + 11}" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">PEAK {max_val}</text>')
     svg_parts.append(f'<text x="{x + w - 6}" y="{y + h - 5}" text-anchor="end" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">MIN {min_val}</text>')
 
@@ -225,7 +226,7 @@ def build_sparkline(history, x, y, w, h, line_color, grad_id):
 
 def build_dashboard_svg(lc_data, cf_data, cc_data):
     W = 960
-    H = 416
+    H = 430
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="{H}">
   <defs>
@@ -286,8 +287,15 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
     }}
     .rating-val {{
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Display', sans-serif;
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 700;
+      fill: #f0f6fc;
+    }}
+    .solved-header {{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
       fill: #f0f6fc;
     }}
     .meta-val {{
@@ -317,13 +325,13 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
   <!-- Header Row -->
   <g transform="translate(24, 28)">
     <text x="0" y="0" class="header-label">COMPETITIVE STATISTICS</text>
-    <text x="{W - 48}" y="0" text-anchor="end" class="header-label">VERIFIED TELEMETRY</text>
+    <text x="{W - 48}" y="0" text-anchor="end" class="header-label">RATINGS &amp; PROBLEMS SOLVED</text>
   </g>
   <line x1="24" y1="38" x2="{W - 24}" y2="38" stroke="#21262d" stroke-width="1"/>
 '''
 
     card_w = 288
-    card_h = 352
+    card_h = 366
     gap = 18
     cards_x = [24, 24 + card_w + gap, 24 + 2 * (card_w + gap)]
     card_y = 48
@@ -342,7 +350,7 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
 
     sparkline_lc = build_sparkline(
         lc_data.get("rating_history", []) if lc_data else [],
-        x1 + 14, card_y + 138, card_w - 28, 86,
+        x1 + 14, card_y + 132, card_w - 28, 80,
         "#f59e0b", "lc-fill"
     )
 
@@ -350,7 +358,6 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
   <!-- CARD 1: LEETCODE -->
   <g class="card-shell">
     <rect x="{x1}" y="{card_y}" width="{card_w}" height="{card_h}" rx="6" fill="url(#card-panel-bg)" stroke="#30363d" stroke-width="1"/>
-    <!-- Controlled top accent line -->
     <line x1="{x1+6}" y1="{card_y}" x2="{x1+card_w-6}" y2="{card_y}" stroke="#f59e0b" stroke-width="2"/>
 
     <!-- Header & User -->
@@ -358,24 +365,28 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
     <text x="{x1+card_w-16}" y="{card_y+26}" text-anchor="end" class="meta-val">id: {lc_data.get('handle', 'TUS8Mufpy3')}</text>
 
     <!-- Rating Section -->
-    <rect x="{x1+14}" y="{card_y+40}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-    <text x="{x1+26}" y="{card_y+58}" class="stat-label">CURRENT RATING</text>
-    <text x="{x1+26}" y="{card_y+94}" class="rating-val">{lc_rating}</text>
+    <rect x="{x1+14}" y="{card_y+38}" width="{card_w-28}" height="82" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <text x="{x1+26}" y="{card_y+56}" class="stat-label">CURRENT RATING</text>
+    <text x="{x1+26}" y="{card_y+90}" class="rating-val">{lc_rating}</text>
     
-    <text x="{x1+card_w-26}" y="{card_y+76}" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">{lc_peak}</tspan></text>
-    <text x="{x1+card_w-26}" y="{card_y+96}" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">{lc_contests}</tspan></text>
+    <text x="{x1+card_w-26}" y="{card_y+74}" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">{lc_peak}</tspan></text>
+    <text x="{x1+card_w-26}" y="{card_y+94}" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">{lc_contests}</tspan></text>
 
     <!-- Rating History Chart -->
-    <rect x="{x1+14}" y="{card_y+138}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <rect x="{x1+14}" y="{card_y+130}" width="{card_w-28}" height="80" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     {sparkline_lc}
 
-    <!-- Solved Breakdown -->
-    <g transform="translate({x1+14}, {card_y+236})">
-      <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-      <text x="12" y="20" class="stat-label">PROBLEMS SOLVED ({lc_solved})</text>
+    <!-- Problems Solved Block (Clearly Highlighted) -->
+    <g transform="translate({x1+14}, {card_y+220})">
+      <rect x="0" y="0" width="{card_w-28}" height="132" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
       
-      <!-- Progress Bar Breakdown -->
-      <g transform="translate(12, 32)">
+      <!-- Prominent Problems Solved Header -->
+      <rect x="12" y="12" width="{card_w-52}" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+      <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
+      <text x="{card_w-62}" y="31" text-anchor="end" class="solved-header" fill="#f59e0b" font-size="14">{lc_solved}</text>
+
+      <!-- Easy / Medium / Hard Breakdown -->
+      <g transform="translate(12, 50)">
         <text x="0" y="14" fill="#238636" font-size="10" font-family="Consolas, monospace" font-weight="600">EASY</text>
         <text x="45" y="14" class="meta-highlight" font-size="10" font-family="Consolas, monospace">{lc_easy}</text>
         <rect x="80" y="6" width="{card_w-136}" height="8" rx="2" fill="#21262d"/>
@@ -404,36 +415,47 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
         cf_peak = str(cf_data.get("peak_rating", 0))
         cf_rank = cf_data.get("rank", "Unrated")
         cf_contests = cf_data.get("contests", 0)
+        cf_solved = cf_data.get("solved", 0)
         sparkline_cf = build_sparkline(
             cf_data.get("rating_history", []),
-            x2 + 14, card_y + 138, card_w - 28, 86,
+            x2 + 14, card_y + 132, card_w - 28, 80,
             "#94a3b8", "cf-fill"
         )
         cf_bottom = f'''
-        <g transform="translate({x2+14}, {card_y+236})">
-          <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-          <text x="14" y="22" class="stat-label">COMPETITIVE METRICS</text>
-          <text x="14" y="46" class="meta-val">Rank: <tspan class="meta-highlight">{cf_rank}</tspan></text>
-          <text x="14" y="68" class="meta-val">Max Rating: <tspan class="meta-highlight">{cf_peak}</tspan></text>
-          <text x="14" y="90" class="meta-val">Rated Contests: <tspan class="meta-highlight">{cf_contests}</tspan></text>
+        <g transform="translate({x2+14}, {card_y+220})">
+          <rect x="0" y="0" width="{card_w-28}" height="132" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+          <rect x="12" y="12" width="{card_w-52}" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+          <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
+          <text x="{card_w-62}" y="31" text-anchor="end" class="solved-header" fill="#94a3b8" font-size="14">{cf_solved}</text>
+
+          <g transform="translate(14, 52)">
+            <text x="0" y="14" class="meta-val">Rank: <tspan class="meta-highlight">{cf_rank}</tspan></text>
+            <text x="0" y="34" class="meta-val">Max Rating: <tspan class="meta-highlight">{cf_peak}</tspan></text>
+            <text x="0" y="54" class="meta-val">Rated Contests: <tspan class="meta-highlight">{cf_contests}</tspan></text>
+          </g>
         </g>
         '''
     else:
         cf_rating = "—"
         sparkline_cf = f'''
         <g opacity="0.6">
-          <line x1="{x2+24}" y1="{card_y+181}" x2="{x2+card_w-24}" y2="{card_y+181}" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
-          <text x="{x2+card_w//2}" y="{card_y+176}" text-anchor="middle" fill="#8b949e" font-size="11" font-family="-apple-system, sans-serif" font-weight="600">Account Unlinked</text>
-          <text x="{x2+card_w//2}" y="{card_y+194}" text-anchor="middle" fill="#6e7681" font-size="9" font-family="Consolas, monospace">Set handle in config to sync graph</text>
+          <line x1="{x2+24}" y1="{card_y+170}" x2="{x2+card_w-24}" y2="{card_y+170}" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="{x2+card_w//2}" y="{card_y+165}" text-anchor="middle" fill="#8b949e" font-size="11" font-family="-apple-system, sans-serif" font-weight="600">Account Unlinked</text>
+          <text x="{x2+card_w//2}" y="{card_y+183}" text-anchor="middle" fill="#6e7681" font-size="9" font-family="Consolas, monospace">Set handle in config to sync graph</text>
         </g>
         '''
         cf_bottom = f'''
-        <g transform="translate({x2+14}, {card_y+236})">
-          <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-          <text x="14" y="22" class="stat-label">STATUS</text>
-          <text x="14" y="46" class="meta-val">Status: <tspan fill="#d29922" font-weight="600">Pending Setup</tspan></text>
-          <text x="14" y="66" fill="#8b949e" font-size="10" font-family="-apple-system, sans-serif">Provide Codeforces handle to</text>
-          <text x="14" y="82" fill="#8b949e" font-size="10" font-family="-apple-system, sans-serif">display live competitive statistics.</text>
+        <g transform="translate({x2+14}, {card_y+220})">
+          <rect x="0" y="0" width="{card_w-28}" height="132" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+          <rect x="12" y="12" width="{card_w-52}" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+          <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
+          <text x="{card_w-62}" y="31" text-anchor="end" class="solved-header" fill="#6e7681" font-size="14">—</text>
+
+          <g transform="translate(14, 52)">
+            <text x="0" y="14" class="meta-val">Status: <tspan fill="#d29922" font-weight="600">Pending Setup</tspan></text>
+            <text x="0" y="36" fill="#8b949e" font-size="10" font-family="-apple-system, sans-serif">Provide Codeforces handle to</text>
+            <text x="0" y="52" fill="#8b949e" font-size="10" font-family="-apple-system, sans-serif">display live competitive statistics.</text>
+          </g>
         </g>
         '''
 
@@ -448,15 +470,15 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
     <text x="{x2+card_w-16}" y="{card_y+26}" text-anchor="end" class="meta-val">{'id: ' + cf_data['handle'] if cf_data else '[unlinked]'}</text>
 
     <!-- Rating Section -->
-    <rect x="{x2+14}" y="{card_y+40}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-    <text x="{x2+26}" y="{card_y+58}" class="stat-label">CURRENT RATING</text>
-    <text x="{x2+26}" y="{card_y+94}" class="rating-val" fill="#8b949e">{cf_rating}</text>
+    <rect x="{x2+14}" y="{card_y+38}" width="{card_w-28}" height="82" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <text x="{x2+26}" y="{card_y+56}" class="stat-label">CURRENT RATING</text>
+    <text x="{x2+26}" y="{card_y+90}" class="rating-val" fill="#8b949e">{cf_rating}</text>
     
-    <text x="{x2+card_w-26}" y="{card_y+76}" text-anchor="end" class="meta-val">Status: <tspan class="meta-highlight">{'Linked' if cf_data else 'Unlinked'}</tspan></text>
-    <text x="{x2+card_w-26}" y="{card_y+96}" text-anchor="end" class="meta-val">Rank: <tspan class="meta-highlight">{'Active' if cf_data else 'None'}</tspan></text>
+    <text x="{x2+card_w-26}" y="{card_y+74}" text-anchor="end" class="meta-val">Status: <tspan class="meta-highlight">{'Linked' if cf_data else 'Unlinked'}</tspan></text>
+    <text x="{x2+card_w-26}" y="{card_y+94}" text-anchor="end" class="meta-val">Rank: <tspan class="meta-highlight">{'Active' if cf_data else 'None'}</tspan></text>
 
     <!-- Rating History Chart / Empty Well -->
-    <rect x="{x2+14}" y="{card_y+138}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <rect x="{x2+14}" y="{card_y+130}" width="{card_w-28}" height="80" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     {sparkline_cf}
 
     <!-- Bottom Stat Block -->
@@ -473,10 +495,11 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
     cc_contests = cc_data["contests"] if cc_data else 0
     cc_stars = cc_data.get("stars", "1★") if cc_data else "1★"
     cc_div = cc_data.get("division", "Div 4") if cc_data else "Div 4"
+    cc_solved = cc_data.get("solved", 74) if cc_data else 74
 
     sparkline_cc = build_sparkline(
         cc_data.get("rating_history", []) if cc_data else [],
-        x3 + 14, card_y + 138, card_w - 28, 86,
+        x3 + 14, card_y + 132, card_w - 28, 80,
         "#d97706", "cc-fill"
     )
 
@@ -491,24 +514,31 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
     <text x="{x3+card_w-16}" y="{card_y+26}" text-anchor="end" class="meta-val">id: {cc_data.get('handle', 'uvv_0000')}</text>
 
     <!-- Rating Section -->
-    <rect x="{x3+14}" y="{card_y+40}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-    <text x="{x3+26}" y="{card_y+58}" class="stat-label">CURRENT RATING</text>
-    <text x="{x3+26}" y="{card_y+94}" class="rating-val">{cc_rating}</text>
+    <rect x="{x3+14}" y="{card_y+38}" width="{card_w-28}" height="82" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <text x="{x3+26}" y="{card_y+56}" class="stat-label">CURRENT RATING</text>
+    <text x="{x3+26}" y="{card_y+90}" class="rating-val">{cc_rating}</text>
     
-    <text x="{x3+card_w-26}" y="{card_y+76}" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">{cc_peak}</tspan></text>
-    <text x="{x3+card_w-26}" y="{card_y+96}" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">{cc_contests}</tspan></text>
+    <text x="{x3+card_w-26}" y="{card_y+74}" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">{cc_peak}</tspan></text>
+    <text x="{x3+card_w-26}" y="{card_y+94}" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">{cc_contests}</tspan></text>
 
     <!-- Rating History Chart -->
-    <rect x="{x3+14}" y="{card_y+138}" width="{card_w-28}" height="86" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+    <rect x="{x3+14}" y="{card_y+130}" width="{card_w-28}" height="80" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     {sparkline_cc}
 
-    <!-- Bottom Stat Block -->
-    <g transform="translate({x3+14}, {card_y+236})">
-      <rect x="0" y="0" width="{card_w-28}" height="102" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-      <text x="14" y="22" class="stat-label">STARTERS TELEMETRY</text>
-      <text x="14" y="46" class="meta-val">Tier: <tspan class="meta-highlight">{cc_div}</tspan></text>
-      <text x="14" y="68" class="meta-val">Star Rating: <tspan class="meta-highlight">{cc_stars}</tspan></text>
-      <text x="14" y="90" class="meta-val">Logged Contests: <tspan class="meta-highlight">{cc_contests} Contests</tspan></text>
+    <!-- Problems Solved Block (Clearly Highlighted) -->
+    <g transform="translate({x3+14}, {card_y+220})">
+      <rect x="0" y="0" width="{card_w-28}" height="132" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+      
+      <!-- Prominent Problems Solved Header -->
+      <rect x="12" y="12" width="{card_w-52}" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+      <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
+      <text x="{card_w-62}" y="31" text-anchor="end" class="solved-header" fill="#d97706" font-size="14">{cc_solved}</text>
+
+      <g transform="translate(14, 52)">
+        <text x="0" y="14" class="meta-val">Division: <tspan class="meta-highlight">{cc_div}</tspan></text>
+        <text x="0" y="34" class="meta-val">Star Rating: <tspan class="meta-highlight">{cc_stars}</tspan></text>
+        <text x="0" y="54" class="meta-val">Logged Contests: <tspan class="meta-highlight">{cc_contests} Contests</tspan></text>
+      </g>
     </g>
   </g>
 </svg>'''
@@ -516,7 +546,7 @@ def build_dashboard_svg(lc_data, cf_data, cc_data):
     return svg
 
 def main():
-    print("Generating Refined Competitive Gaming Coding Profile...")
+    print("Generating Refined Competitive Gaming Coding Profile with Visible Problems Solved...")
     lc_data = get_leetcode_data(LEETCODE_USERNAME)
     cf_data = get_codeforces_data(CODEFORCES_USERNAME)
     cc_data = get_codechef_data(CODECHEF_USERNAME)

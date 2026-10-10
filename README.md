@@ -17,7 +17,7 @@ Hi, I'm Yuvraj Singh.
 </div>
 
 <div align="center">
-  <a href="https://uvv-01.github.io/Uvv-01/scroll.html">
-    <img src="assets/contact-scroll.svg" alt="Ancient Parchment Contact Scroll (Click to Unroll)" width="100%"/>
+  <a href="https://github.com/uvv-01">
+    <img src="assets/contact-scroll.gif" alt="Contact Scroll" width="100%"/>
   </a>
 </div>
