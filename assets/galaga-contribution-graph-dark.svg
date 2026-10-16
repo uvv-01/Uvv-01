@@ -1107,7 +1107,7 @@
 					values="#39d353;#39d353" keyTimes="0;1"/>
 			</rect><rect x="1144" y="125" width="20" height="20" rx="3" fill="transparent">
 				<animate attributeName="fill" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
-					values="transparent;transparent" keyTimes="0;1"/>
+					values="#0e4429;#0e4429" keyTimes="0;1"/>
 			</rect><rect x="1144" y="147" width="20" height="20" rx="3" fill="transparent">
 				<animate attributeName="fill" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
 					values="transparent;transparent" keyTimes="0;1"/>
