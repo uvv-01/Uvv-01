@@ -252,7 +252,7 @@
       <!-- Prominent Problems Solved Header -->
       <rect x="12" y="12" width="236" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
       <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
-      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#d97706" font-size="14">74</text>
+      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#d97706" font-size="14">76</text>
 
       <g transform="translate(14, 52)">
         <text x="0" y="14" class="meta-val">Division: <tspan class="meta-highlight">Div 4</tspan></text>
