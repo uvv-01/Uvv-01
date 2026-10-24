@@ -1110,7 +1110,7 @@
 					values="#9be9a8;#9be9a8" keyTimes="0;1"/>
 			</rect><rect x="1144" y="147" width="20" height="20" rx="3" fill="transparent">
 				<animate attributeName="fill" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
-					values="transparent;transparent" keyTimes="0;1"/>
+					values="#9be9a8;#9be9a8" keyTimes="0;1"/>
 			</rect><g opacity="0">
 				<animate attributeName="opacity" calcMode="discrete" dur="48000ms" repeatCount="indefinite"
 					keyTimes="0;0.0125;0.0125;0.0292;0.0292;1" values="0;0;1;1;0;0"/>
