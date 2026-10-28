@@ -220,29 +220,30 @@
     <!-- Rating Section -->
     <rect x="650" y="86" width="260" height="82" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     <text x="662" y="104" class="stat-label">CURRENT RATING</text>
-    <text x="662" y="138" class="rating-val">1133</text>
+    <text x="662" y="138" class="rating-val">1099</text>
     
     <text x="898" y="122" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">1202</tspan></text>
-    <text x="898" y="142" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">12</tspan></text>
+    <text x="898" y="142" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">13</tspan></text>
 
     <!-- Rating History Chart -->
     <rect x="650" y="178" width="260" height="80" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     <line x1="650" y1="220" x2="910" y2="220" stroke="#21262d" stroke-width="1" stroke-dasharray="2 3"/>
 <line x1="650" y1="259" x2="910" y2="259" stroke="#21262d" stroke-width="1"/>
-<path d="M 658.0 250.0 L 680.2 245.1 L 702.4 234.0 L 724.5 220.3 L 746.7 207.8 L 768.9 203.9 L 791.1 198.2 L 813.3 196.5 L 835.5 190.0 L 857.6 193.2 L 879.8 196.8 L 902.0 201.7 L 902.0 259 L 658.0 259 Z" fill="url(#cc-fill)" opacity="0.12"/>
-<path d="M 658.0 250.0 L 680.2 245.1 L 702.4 234.0 L 724.5 220.3 L 746.7 207.8 L 768.9 203.9 L 791.1 198.2 L 813.3 196.5 L 835.5 190.0 L 857.6 193.2 L 879.8 196.8 L 902.0 201.7" fill="none" stroke="#d97706" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 658.0 250.0 L 678.3 245.1 L 698.7 234.0 L 719.0 220.3 L 739.3 207.8 L 759.7 203.9 L 780.0 198.2 L 800.3 196.5 L 820.7 190.0 L 841.0 193.2 L 861.3 196.8 L 881.7 201.7 L 902.0 207.5 L 902.0 259 L 658.0 259 Z" fill="url(#cc-fill)" opacity="0.12"/>
+<path d="M 658.0 250.0 L 678.3 245.1 L 698.7 234.0 L 719.0 220.3 L 739.3 207.8 L 759.7 203.9 L 780.0 198.2 L 800.3 196.5 L 820.7 190.0 L 841.0 193.2 L 861.3 196.8 L 881.7 201.7 L 902.0 207.5" fill="none" stroke="#d97706" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="658.0" cy="250.0" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="680.2" cy="245.1" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="702.4" cy="234.0" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="724.5" cy="220.3" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="746.7" cy="207.8" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="768.9" cy="203.9" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="791.1" cy="198.2" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="813.3" cy="196.5" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="835.5" cy="190.0" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
-<circle cx="857.6" cy="193.2" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="879.8" cy="196.8" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="902.0" cy="201.7" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
+<circle cx="678.3" cy="245.1" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="698.7" cy="234.0" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="719.0" cy="220.3" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="739.3" cy="207.8" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="759.7" cy="203.9" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="780.0" cy="198.2" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="800.3" cy="196.5" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="820.7" cy="190.0" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
+<circle cx="841.0" cy="193.2" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="861.3" cy="196.8" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="881.7" cy="201.7" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="902.0" cy="207.5" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
 <text x="656" y="191" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">PEAK 1202</text>
 <text x="904" y="255" text-anchor="end" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">MIN 849</text>
 
@@ -258,7 +259,7 @@
       <g transform="translate(14, 52)">
         <text x="0" y="14" class="meta-val">Division: <tspan class="meta-highlight">Div 4</tspan></text>
         <text x="0" y="34" class="meta-val">Star Rating: <tspan class="meta-highlight">1★</tspan></text>
-        <text x="0" y="54" class="meta-val">Logged Contests: <tspan class="meta-highlight">12 Contests</tspan></text>
+        <text x="0" y="54" class="meta-val">Logged Contests: <tspan class="meta-highlight">13 Contests</tspan></text>
       </g>
     </g>
   </g>
