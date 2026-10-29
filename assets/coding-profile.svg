@@ -142,19 +142,19 @@
       <!-- Prominent Problems Solved Header -->
       <rect x="12" y="12" width="236" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
       <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
-      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#f59e0b" font-size="14">182</text>
+      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#f59e0b" font-size="14">184</text>
 
       <!-- Easy / Medium / Hard Breakdown -->
       <g transform="translate(12, 50)">
         <text x="0" y="14" fill="#238636" font-size="10" font-family="Consolas, monospace" font-weight="600">EASY</text>
-        <text x="45" y="14" class="meta-highlight" font-size="10" font-family="Consolas, monospace">113</text>
+        <text x="45" y="14" class="meta-highlight" font-size="10" font-family="Consolas, monospace">114</text>
         <rect x="80" y="6" width="152" height="8" rx="2" fill="#21262d"/>
         <rect x="80" y="6" width="94" height="8" rx="2" fill="#238636"/>
 
         <text x="0" y="34" fill="#d29922" font-size="10" font-family="Consolas, monospace" font-weight="600">MED</text>
-        <text x="45" y="34" class="meta-highlight" font-size="10" font-family="Consolas, monospace">67</text>
+        <text x="45" y="34" class="meta-highlight" font-size="10" font-family="Consolas, monospace">68</text>
         <rect x="80" y="26" width="152" height="8" rx="2" fill="#21262d"/>
-        <rect x="80" y="26" width="55" height="8" rx="2" fill="#d29922"/>
+        <rect x="80" y="26" width="56" height="8" rx="2" fill="#d29922"/>
 
         <text x="0" y="54" fill="#da3633" font-size="10" font-family="Consolas, monospace" font-weight="600">HARD</text>
         <text x="45" y="54" class="meta-highlight" font-size="10" font-family="Consolas, monospace">2</text>
