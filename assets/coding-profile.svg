@@ -143,14 +143,14 @@
       <!-- Prominent Problems Solved Header -->
       <rect x="12" y="12" width="236" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
       <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
-      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#f59e0b" font-size="14">188</text>
+      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#f59e0b" font-size="14">189</text>
 
       <!-- Easy / Medium / Hard Breakdown -->
       <g transform="translate(12, 50)">
         <text x="0" y="14" fill="#238636" font-size="10" font-family="Consolas, monospace" font-weight="600">EASY</text>
-        <text x="45" y="14" class="meta-highlight" font-size="10" font-family="Consolas, monospace">115</text>
+        <text x="45" y="14" class="meta-highlight" font-size="10" font-family="Consolas, monospace">116</text>
         <rect x="80" y="6" width="152" height="8" rx="2" fill="#21262d"/>
-        <rect x="80" y="6" width="92" height="8" rx="2" fill="#238636"/>
+        <rect x="80" y="6" width="93" height="8" rx="2" fill="#238636"/>
 
         <text x="0" y="34" fill="#d29922" font-size="10" font-family="Consolas, monospace" font-weight="600">MED</text>
         <text x="45" y="34" class="meta-highlight" font-size="10" font-family="Consolas, monospace">71</text>
@@ -221,30 +221,31 @@
     <!-- Rating Section -->
     <rect x="650" y="86" width="260" height="82" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     <text x="662" y="104" class="stat-label">CURRENT RATING</text>
-    <text x="662" y="138" class="rating-val">1100</text>
+    <text x="662" y="138" class="rating-val">1108</text>
     
     <text x="898" y="122" text-anchor="end" class="meta-val">Peak: <tspan class="meta-highlight">1202</tspan></text>
-    <text x="898" y="142" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">13</tspan></text>
+    <text x="898" y="142" text-anchor="end" class="meta-val">Contests: <tspan class="meta-highlight">14</tspan></text>
 
     <!-- Rating History Chart -->
     <rect x="650" y="178" width="260" height="80" rx="4" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
     <line x1="650" y1="220" x2="910" y2="220" stroke="#21262d" stroke-width="1" stroke-dasharray="2 3"/>
 <line x1="650" y1="259" x2="910" y2="259" stroke="#21262d" stroke-width="1"/>
-<path d="M 658.0 250.0 L 678.3 245.1 L 698.7 234.0 L 719.0 220.3 L 739.3 207.8 L 759.7 203.9 L 780.0 198.2 L 800.3 196.5 L 820.7 190.0 L 841.0 193.2 L 861.3 196.8 L 881.7 201.7 L 902.0 207.3 L 902.0 259 L 658.0 259 Z" fill="url(#cc-fill)" opacity="0.12"/>
-<path d="M 658.0 250.0 L 678.3 245.1 L 698.7 234.0 L 719.0 220.3 L 739.3 207.8 L 759.7 203.9 L 780.0 198.2 L 800.3 196.5 L 820.7 190.0 L 841.0 193.2 L 861.3 196.8 L 881.7 201.7 L 902.0 207.3" fill="none" stroke="#d97706" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 658.0 250.0 L 676.8 245.1 L 695.5 234.0 L 714.3 220.3 L 733.1 207.8 L 751.8 203.9 L 770.6 198.2 L 789.4 196.5 L 808.2 190.0 L 826.9 193.2 L 845.7 196.8 L 864.5 201.7 L 883.2 207.3 L 902.0 206.0 L 902.0 259 L 658.0 259 Z" fill="url(#cc-fill)" opacity="0.12"/>
+<path d="M 658.0 250.0 L 676.8 245.1 L 695.5 234.0 L 714.3 220.3 L 733.1 207.8 L 751.8 203.9 L 770.6 198.2 L 789.4 196.5 L 808.2 190.0 L 826.9 193.2 L 845.7 196.8 L 864.5 201.7 L 883.2 207.3 L 902.0 206.0" fill="none" stroke="#d97706" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="658.0" cy="250.0" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="678.3" cy="245.1" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="698.7" cy="234.0" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="719.0" cy="220.3" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="739.3" cy="207.8" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="759.7" cy="203.9" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="780.0" cy="198.2" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="800.3" cy="196.5" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="820.7" cy="190.0" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
-<circle cx="841.0" cy="193.2" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="861.3" cy="196.8" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="881.7" cy="201.7" r="1.5" fill="#d97706" opacity="0.8"/>
-<circle cx="902.0" cy="207.3" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
+<circle cx="676.8" cy="245.1" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="695.5" cy="234.0" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="714.3" cy="220.3" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="733.1" cy="207.8" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="751.8" cy="203.9" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="770.6" cy="198.2" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="789.4" cy="196.5" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="808.2" cy="190.0" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
+<circle cx="826.9" cy="193.2" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="845.7" cy="196.8" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="864.5" cy="201.7" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="883.2" cy="207.3" r="1.5" fill="#d97706" opacity="0.8"/>
+<circle cx="902.0" cy="206.0" r="2.5" fill="#f0f6fc" stroke="#d97706" stroke-width="1.25"/>
 <text x="656" y="191" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">PEAK 1202</text>
 <text x="904" y="255" text-anchor="end" fill="#6e7681" font-size="8.5" font-family="Consolas, monospace">MIN 849</text>
 
@@ -255,12 +256,12 @@
       <!-- Prominent Problems Solved Header -->
       <rect x="12" y="12" width="236" height="28" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
       <text x="22" y="30" class="stat-label">PROBLEMS SOLVED</text>
-      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#d97706" font-size="14">78</text>
+      <text x="226" y="31" text-anchor="end" class="solved-header" fill="#d97706" font-size="14">80</text>
 
       <g transform="translate(14, 52)">
         <text x="0" y="14" class="meta-val">Division: <tspan class="meta-highlight">Div 4</tspan></text>
         <text x="0" y="34" class="meta-val">Star Rating: <tspan class="meta-highlight">1★</tspan></text>
-        <text x="0" y="54" class="meta-val">Logged Contests: <tspan class="meta-highlight">13 Contests</tspan></text>
+        <text x="0" y="54" class="meta-val">Logged Contests: <tspan class="meta-highlight">14 Contests</tspan></text>
       </g>
     </g>
   </g>
